@@ -32,7 +32,7 @@ const CardTemaExpandido = (props) => {
   return (
     <>
       {props.temaAtivo && (
-        <div className="card m-1">
+        <div className="card">
           <div className="card-body">
             <div className="d-flex justify-content-between">
               <h5 className="card-title">{temaAtivo.titulo}</h5>

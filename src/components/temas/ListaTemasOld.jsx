@@ -32,7 +32,7 @@ function ListaTemas() {
     <div>
       {temas &&
         temas.map((tema, index) => (
-          <div className="card m-1" key={index}>
+          <div className="card" key={index}>
             <div
               className="card-header card-item"
               onClick={() => {

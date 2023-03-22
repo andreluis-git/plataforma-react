@@ -1,9 +1,12 @@
 import React from "react";
+import "./Header.css";
 
 const Header = () => {
   return (
     <>
-      <h1>LOGO</h1>
+      <div className="header">
+        <h1>LOGO</h1>
+      </div>
     </>
   );
 };

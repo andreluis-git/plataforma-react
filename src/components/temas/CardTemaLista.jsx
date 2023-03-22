@@ -8,7 +8,7 @@ const CardLista = (props) => {
       {temas &&
         temas.map((tema, idx) => (
           <div
-            className="card m-1 w-100 card-lista"
+            className="card mb-2 w-100 card-lista"
             key={idx}
             onClick={() => props.setTemaAtivo(tema)}
           >
