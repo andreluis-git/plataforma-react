@@ -1,0 +1,14 @@
+.card-icons:hover {
+  cursor: pointer;
+  background-color: #e9ecef;
+}
+
+.card-icons {
+  border-radius: 30px;
+}
+
+.separador {
+  margin: 10px 0px;
+  border-top: 3px solid;
+  border-radius: 5px;
+}
