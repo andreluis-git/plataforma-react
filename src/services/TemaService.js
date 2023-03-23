@@ -22,7 +22,6 @@ const listarTemas = () =>
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((response) => {
-        console.log("get sucesso: ", response.data);
         response.data.map(
           (item) =>
             (item.dataCriacao = DateFormatUtil.convertDate(item.dataCriacao))

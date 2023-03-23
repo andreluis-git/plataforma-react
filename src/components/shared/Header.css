@@ -1,4 +1,44 @@
 .header {
   height: 100px;
-  background-color: aquamarine;
+  display: flex;
+  align-items: center;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 1) 0%,
+    #77149e 50%,
+    rgba(9, 9, 9, 1) 100%
+  );
+}
+
+.itens-esquerda .btn-header {
+  margin-left: 15px;
+}
+
+.itens-direita .btn-header {
+  margin-right: 15px;
+}
+
+.btn-header {
+  padding: 10px;
+  color: white;
+  border: solid 0.1em;
+  border-color: #79090900;
+  font-weight: bold;
+}
+
+.btn-header:hover {
+  cursor: pointer;
+  background-color: #77149e60;
+  border-bottom: solid white 1px;
+}
+
+.logo-bg {
+  /* background-color: #fff; */
+  border-radius: 100px;
+  height: 100px;
+}
+
+.perfil-icon:hover {
+  cursor: pointer;
 }

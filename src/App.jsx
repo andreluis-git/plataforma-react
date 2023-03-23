@@ -29,7 +29,7 @@ function App() {
   };
 
   return (
-    <div className="container">
+    <div className="container-fluid p-0 app-style">
       <Router>
         <div>
           <Routes>

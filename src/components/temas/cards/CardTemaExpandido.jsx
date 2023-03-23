@@ -1,6 +1,6 @@
 import PrintIcon from "@mui/icons-material/Print";
 import React, { useRef, useState } from "react";
-import PrintTema from "../../utils/PrintTemaUtil";
+import PrintTema from "../../../utils/PrintTemaUtil";
 import "./CardTemaExpandido.css";
 
 // ADICIONAR BOTÃO PARA DAR LIKE NOS TEMAS QUE GOSTA
@@ -21,18 +21,11 @@ const CardTemaExpandido = (props) => {
   };
 
   document.addEventListener("mousedown", closeOpenMenus);
-  // window.onclick = function (event) {
-  //   if (shareDropdown) {
-  //     setShareDropdown(false);
-  //   }
-  //   console.log(event.target.id);
-  //   console.log(shareDropdown);
-  // };
 
   return (
     <>
       {props.temaAtivo && (
-        <div className="card">
+        <div className="card" id="tema-expandido-id">
           <div className="card-body">
             <div className="d-flex justify-content-between">
               <h5 className="card-title">{temaAtivo.titulo}</h5>

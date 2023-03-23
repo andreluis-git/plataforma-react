@@ -6,11 +6,27 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  min-height: 90vh;
   height: 100%;
 }
 
-.invisible-scrollbar::-webkit-scrollbar {
+/* .invisible-scrollbar::-webkit-scrollbar {
   display: none;
+} */
+
+.tema-header {
+  background-color: white;
+  border-bottom: solid;
+  border-width: 0.01em;
+  border-color: var(--cor-cinzaClaro);
+  height: 90px;
+  display: flex;
+  align-items: center;
+}
+
+.tema-body {
+  min-height: 90vh;
+  height: 100%;
 }
 
 .classificacao-temas {
@@ -21,12 +37,12 @@
 }
 
 .classificacao-temas:hover {
-  background-color: #e9ecef;
+  background-color: var(--cor-cinzaClaro);
   cursor: pointer;
 }
 
 .classificacao-temas-focus {
-  background-color: #e9ecef;
+  background-color: var(--cor-cinzaClaro);
   font-weight: bold;
   margin-right: 10px;
   padding: 3px 15px;
