@@ -3,41 +3,33 @@ import SearchIcon from "@mui/icons-material/Search";
 import "./TemasHeader.css";
 
 const TemasHeader = (props) => {
-  const { paginaSelecionada } = props;
+  const { pagina } = props;
   const [focusOrdenacaoItem, setFocusOrdenacaoItem] = useState(0);
-
-  function firstLetterUpperCase(paginaSelecionada) {
-    console.log(paginaSelecionada);
-    return (
-      paginaSelecionada[0].toUpperCase() +
-      paginaSelecionada.slice(1).toLowerCase()
-    );
-  }
 
   return (
     <>
       <div>
         <div className="row">
           <div className="col-6">
-            <h3>{firstLetterUpperCase(paginaSelecionada)}</h3>
-            {paginaSelecionada.toLowerCase() === "temas" && (
+            <h3>{pagina}</h3>
+            {window.location.pathname === "temas" && (
               <div className="pb-3 pt-2">
-                <span
+                <button
                   className={`classificacao-temas${
                     focusOrdenacaoItem === 0 ? "-focus" : ""
                   }`}
                   onClick={() => setFocusOrdenacaoItem(0)}
                 >
                   Relevantes
-                </span>
-                <span
+                </button>
+                <button
                   className={`classificacao-temas${
                     focusOrdenacaoItem === 1 ? "-focus" : ""
                   }`}
                   onClick={() => setFocusOrdenacaoItem(1)}
                 >
                   Rescentes
-                </span>
+                </button>
               </div>
             )}
           </div>

@@ -33,7 +33,17 @@ function App() {
       <Router>
         <div>
           <Routes>
-            <Route exact path="/temas" element={<Home />} />
+            <Route exact path="/temas" element={<Home pagina="Temas" />} />
+            <Route
+              exact
+              path="/anunciados"
+              element={<Home pagina="Anunciados" />}
+            />
+            <Route
+              exact
+              path="/candidaturas"
+              element={<Home pagina="Candidaturas" />}
+            />
           </Routes>
         </div>
       </Router>

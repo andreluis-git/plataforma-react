@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Temas from "../temas/Temas";
 import Header from "../shared/Header";
 
-const Home = () => {
-  const [paginaSelecionada, setPaginaSelecionada] = useState("TEMAS");
-
+const Home = (props) => {
   return (
     <>
       <div className="">
-        <Header setPaginaSelecionada={setPaginaSelecionada} />
-        <Temas paginaSelecionada={paginaSelecionada} />
+        <Header />
+        <Temas pagina={props.pagina} />
       </div>
     </>
   );

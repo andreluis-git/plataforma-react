@@ -6,7 +6,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  min-height: 90vh;
+  min-height: 80vh;
   height: 100%;
 }
 
@@ -19,13 +19,13 @@
   border-bottom: solid;
   border-width: 0.01em;
   border-color: var(--cor-cinzaClaro);
-  height: 90px;
+  height: 10vh;
   display: flex;
   align-items: center;
 }
 
 .tema-body {
-  min-height: 90vh;
+  min-height: calc(80vh);
   height: 100%;
 }
 

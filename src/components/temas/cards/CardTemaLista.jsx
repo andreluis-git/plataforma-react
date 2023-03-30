@@ -1,4 +1,5 @@
 import React from "react";
+import "./CardTemaLista.css";
 
 function truncate(str, length) {
   if (str.length > length) {

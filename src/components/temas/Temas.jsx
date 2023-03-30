@@ -6,27 +6,59 @@ import "./Temas.css";
 import TemasHeader from "./TemasHeader";
 
 function Temas(props) {
-  const [temas, setTemas] = useState(undefined);
+  const [temas, setTemas] = useState([]);
   const [temaAtivo, setTemaAtivo] = useState(undefined);
 
-  const [tamanhoCardDireita, setTamanhoCardDireita] = useState(80);
+  const [tamanhoCardDireita, setTamanhoCardDireita] = useState(0);
+
+  const carregarTemas = (response) => {
+    setTemas(response);
+    if (response.length > 0) {
+      setTemaAtivo(response[0]);
+    } else {
+      setTemaAtivo(undefined);
+    }
+  };
 
   useEffect(() => {
-    TemaService.listarTemas()
-      .then((response) => {
-        setTemas(response);
-      })
-      .catch((error) => console.log(error));
-  }, []);
+    switch (window.location.pathname) {
+      case "/temas":
+        TemaService.listarTemas()
+          .then((response) => {
+            carregarTemas(response);
+            console.log(response);
+          })
+          .catch((error) => console.log(error));
+        break;
+      case "/anunciados":
+        TemaService.listarTemasAnunciados()
+          .then((response) => {
+            carregarTemas(response);
+            console.log(response);
+          })
+          .catch((error) => console.log(error));
+        break;
+      case "/candidaturas":
+        TemaService.listarTemasCandidaturas()
+          .then((response) => {
+            carregarTemas(response);
+            console.log(response);
+          })
+          .catch((error) => console.log(error));
+        break;
+      default:
+        carregarTemas([]);
+    }
+  }, [props.pagina]);
 
   useEffect(() => {
-    if (temas && temas.length > 0 && !temaAtivo) setTemaAtivo(temas[0]);
     if (temaAtivo) {
       let tamanho = (
         (document.getElementById("tema-expandido-id").offsetHeight * 100) /
         window.innerHeight
       ).toFixed(2);
-      if (tamanho !== tamanhoCardDireita) setTamanhoCardDireita(tamanho);
+      console.log(tamanho);
+      setTamanhoCardDireita(tamanho);
     }
   }, [temas, temaAtivo]);
 
@@ -34,7 +66,7 @@ function Temas(props) {
     <>
       <div className="tema-header">
         <div className="container">
-          <TemasHeader paginaSelecionada={props.paginaSelecionada} />
+          <TemasHeader pagina={props.pagina} />
         </div>
       </div>
       <div className="tema-body container mt-3">

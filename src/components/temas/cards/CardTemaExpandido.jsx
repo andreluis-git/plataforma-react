@@ -37,19 +37,6 @@ const CardTemaExpandido = (props) => {
             <hr className="separador" />
             <div className="d-flex align-items-center">
               <button className="btn btn-dark">Candidatar-se</button>
-              {/* <div className="card-icons" style={{ marginLeft: "10px" }}>
-                <div onClick={() => setShareDropdown(!shareDropdown)}>
-                  <ShareIcon ref={dropMenu} className="m-2" />
-                </div>
-                <div
-                  className={`dropdown-menu ${shareDropdown ? "show" : ""}`}
-                  aria-labelledby="dropdownMenuButton"
-                >
-                  <div className="dropdown-item">Whatsapp</div>
-                  <div className="dropdown-item">Another action</div>
-                  <div className="dropdown-item">Something else here</div>
-                </div>
-              </div> */}
               <div
                 className="card-icons ml-2"
                 onClick={() => PrintTema.print(temaAtivo)}
