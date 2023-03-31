@@ -2,18 +2,6 @@
   cursor: pointer;
 }
 
-.coluna-esquerda {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  min-height: 80vh;
-  height: 100%;
-}
-
-/* .invisible-scrollbar::-webkit-scrollbar {
-  display: none;
-} */
-
 .tema-header {
   background-color: white;
   border-bottom: solid;
@@ -47,4 +35,12 @@
   margin-right: 10px;
   padding: 3px 15px;
   border-radius: 30px;
+}
+
+.card-lista:hover {
+  cursor: pointer;
+}
+
+.card-lista {
+  max-height: 200px;
 }

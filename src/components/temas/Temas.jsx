@@ -1,31 +1,26 @@
 import React, { useEffect, useState } from "react";
 import TemaService from "../../services/TemaService";
-import CardTemaExpandido from "./cards/CardTemaExpandido";
-import CardTemaLista from "./cards/CardTemaLista";
+import ModalTema from "./cards/ModalTema";
 import "./Temas.css";
 import TemasHeader from "./TemasHeader";
 
+function truncate(str, length) {
+  if (str.length > length) {
+    return str.slice(0, length) + "...";
+  } else return str;
+}
+
 function Temas(props) {
   const [temas, setTemas] = useState([]);
-  const [temaAtivo, setTemaAtivo] = useState(undefined);
-
-  const [tamanhoCardDireita, setTamanhoCardDireita] = useState(0);
-
-  const carregarTemas = (response) => {
-    setTemas(response);
-    if (response.length > 0) {
-      setTemaAtivo(response[0]);
-    } else {
-      setTemaAtivo(undefined);
-    }
-  };
+  const [showModal, setShowModal] = useState(false);
+  const [temaModal, setTemaModal] = useState(undefined);
 
   useEffect(() => {
     switch (window.location.pathname) {
       case "/temas":
         TemaService.listarTemas()
           .then((response) => {
-            carregarTemas(response);
+            setTemas(response);
             console.log(response);
           })
           .catch((error) => console.log(error));
@@ -33,7 +28,7 @@ function Temas(props) {
       case "/anunciados":
         TemaService.listarTemasAnunciados()
           .then((response) => {
-            carregarTemas(response);
+            setTemas(response);
             console.log(response);
           })
           .catch((error) => console.log(error));
@@ -41,26 +36,15 @@ function Temas(props) {
       case "/candidaturas":
         TemaService.listarTemasCandidaturas()
           .then((response) => {
-            carregarTemas(response);
+            setTemas(response);
             console.log(response);
           })
           .catch((error) => console.log(error));
         break;
       default:
-        carregarTemas([]);
+        setTemas([]);
     }
   }, [props.pagina]);
-
-  useEffect(() => {
-    if (temaAtivo) {
-      let tamanho = (
-        (document.getElementById("tema-expandido-id").offsetHeight * 100) /
-        window.innerHeight
-      ).toFixed(2);
-      console.log(tamanho);
-      setTamanhoCardDireita(tamanho);
-    }
-  }, [temas, temaAtivo]);
 
   return (
     <>
@@ -70,15 +54,29 @@ function Temas(props) {
         </div>
       </div>
       <div className="tema-body container mt-3">
-        <div className="row" style={{ height: tamanhoCardDireita + "vh" }}>
-          <div className="col-6 coluna-esquerda overflow-auto invisible-scrollbar">
-            <CardTemaLista temas={temas} setTemaAtivo={setTemaAtivo} />
-          </div>
-          <div className="col-6">
-            <CardTemaExpandido temaAtivo={temaAtivo} />
-          </div>
-        </div>
+        {temas &&
+          temas.map((tema, idx) => (
+            <div
+              className="card mb-2 card-lista"
+              key={idx}
+              onClick={() => {
+                setTemaModal(tema);
+                setShowModal(true);
+              }}
+            >
+              <div className="card-body">
+                <div className="d-flex justify-content-between">
+                  <h5 className="card-title">{tema.titulo}</h5>
+                  <span>{tema.dataCriacao}</span>
+                </div>
+                <p className="card-text">{truncate(tema.descricao, 300)}</p>
+              </div>
+            </div>
+          ))}
       </div>
+      {showModal && (
+        <ModalTema setShowModal={setShowModal} temaModal={temaModal} />
+      )}
     </>
   );
 }
