@@ -5,7 +5,6 @@ import Header from "../shared/Header";
 import Temas from "../temas/Temas";
 
 const Home = (props) => {
-  // const [showNovoTemaModal, setShowNovoTemaModal] = useState(false);
   const showNovoTemaModal = useSelector(
     (state) => state.showNovoTemaModal.showModal
   );

@@ -44,10 +44,6 @@ const NovoTemaModal = (props) => {
     console.log(JSON.stringify(event));
   };
 
-  const onChange = (value) => {
-    setDisciplinasCadastradas(value);
-  };
-
   return (
     <>
       <div
