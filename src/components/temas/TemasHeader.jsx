@@ -12,7 +12,7 @@ const TemasHeader = (props) => {
         <div className="row">
           <div className="col-6">
             <h3>{pagina}</h3>
-            {window.location.pathname === "temas" && (
+            {window.location.pathname === "/temas" && (
               <div className="pb-3 pt-2">
                 <button
                   className={`classificacao-temas${

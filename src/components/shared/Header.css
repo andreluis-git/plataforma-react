@@ -2,13 +2,14 @@
   height: 10vh;
   display: flex;
   align-items: center;
-  background: rgb(0, 0, 0);
+  background-color: white;
+  /* background: rgb(0, 0, 0);
   background: linear-gradient(
     90deg,
     rgba(0, 0, 0, 1) 0%,
     #77149e 50%,
     rgba(9, 9, 9, 1) 100%
-  );
+  ); */
 }
 
 .itens-esquerda .btn-header {
@@ -21,7 +22,7 @@
 
 .btn-header {
   padding: 10px;
-  color: white;
+  color: black;
   border: solid 0.1em;
   border-color: #79090900;
   font-weight: bold;
@@ -29,7 +30,7 @@
 
 .btn-header:hover {
   cursor: pointer;
-  background-color: #77149e60;
+  background-color: var(--cor-cinzaClaro);
   border-bottom: solid white 1px;
 }
 

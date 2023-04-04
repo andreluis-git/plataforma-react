@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { rxSetTemaEdicao } from "../../redux/slices/editarTemaSlice";
+import { rxSetShowNovoTemaModal } from "../../redux/slices/showNovoTemaModalSlice";
 import TemaService from "../../services/TemaService";
-import ModalTema from "./cards/ModalTema";
+import ModalTema from "../modais/ModalTema";
 import "./Temas.css";
 import TemasHeader from "./TemasHeader";
 
@@ -15,31 +18,34 @@ function Temas(props) {
   const [showModal, setShowModal] = useState(false);
   const [temaModal, setTemaModal] = useState(undefined);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     switch (window.location.pathname) {
       case "/temas":
         TemaService.listarTemas()
           .then((response) => {
             setTemas(response);
-            console.log(response);
           })
-          .catch((error) => console.log(error));
+          .catch((error) => console.log("Temas.js listarTemas", error));
         break;
       case "/anunciados":
         TemaService.listarTemasAnunciados()
           .then((response) => {
             setTemas(response);
-            console.log(response);
           })
-          .catch((error) => console.log(error));
+          .catch((error) =>
+            console.log("Temas.js listarTemasAnunciados", error)
+          );
         break;
       case "/candidaturas":
         TemaService.listarTemasCandidaturas()
           .then((response) => {
             setTemas(response);
-            console.log(response);
           })
-          .catch((error) => console.log(error));
+          .catch((error) =>
+            console.log("Temas.js listarTemasCandidaturas", error)
+          );
         break;
       default:
         setTemas([]);
@@ -54,6 +60,18 @@ function Temas(props) {
         </div>
       </div>
       <div className="tema-body container mt-3">
+        <div className="d-flex justify-content-end">
+          <button
+            type="button"
+            className="btn btn-dark mb-3"
+            onClick={() => {
+              dispatch(rxSetTemaEdicao(null));
+              dispatch(rxSetShowNovoTemaModal(true));
+            }}
+          >
+            NOVO TEMA
+          </button>
+        </div>
         {temas &&
           temas.map((tema, idx) => (
             <div

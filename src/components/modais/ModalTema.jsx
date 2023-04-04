@@ -1,13 +1,18 @@
-import React from "react";
-import PrintIcon from "@mui/icons-material/Print";
 import CloseIcon from "@mui/icons-material/Close";
-import PrintTema from "../../../utils/PrintTemaUtil";
+import PrintIcon from "@mui/icons-material/Print";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { rxSetTemaEdicao } from "../../redux/slices/editarTemaSlice";
+import { rxSetShowNovoTemaModal } from "../../redux/slices/showNovoTemaModalSlice";
+import PrintTema from "../../utils/PrintTemaUtil";
 import "./ModalTema.css";
 
 // ADICIONAR BOTÃO PARA DAR LIKE NOS TEMAS QUE GOSTA
 
 const ModalTema = (props) => {
   const { setShowModal, temaModal } = props;
+
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -23,14 +28,12 @@ const ModalTema = (props) => {
           >
             <div
               className="modal-dialog modal-lg modal-dialog-centered"
-              role="document"
+              // role="document"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLongTitle">
-                    {temaModal.titulo}
-                  </h5>
+                  <h5 className="modal-title">{temaModal.titulo}</h5>
 
                   <div
                     className="card-icons"
@@ -50,14 +53,30 @@ const ModalTema = (props) => {
                   </div>
                   <hr className="separador" />
                   <div className="d-flex align-items-center">
-                    <button className="btn btn-dark">Candidatar-se</button>
-                    <div
-                      className="card-icons ml-2"
-                      onClick={() => PrintTema.print(temaModal)}
-                      style={{ marginLeft: "10px" }}
-                    >
-                      <PrintIcon className="m-2" />
-                    </div>
+                    {window.location.pathname === "/anunciados" && (
+                      <button
+                        className="btn btn-dark"
+                        onClick={() => {
+                          setShowModal(false);
+                          dispatch(rxSetTemaEdicao(temaModal));
+                          dispatch(rxSetShowNovoTemaModal(true));
+                        }}
+                      >
+                        Editar
+                      </button>
+                    )}
+                    {window.location.pathname === "/temas" && (
+                      <>
+                        <button className="btn btn-dark">Candidatar-se</button>
+                        <div
+                          className="card-icons ml-2"
+                          onClick={() => PrintTema.print(temaModal)}
+                          style={{ marginLeft: "10px" }}
+                        >
+                          <PrintIcon className="m-2" />
+                        </div>
+                      </>
+                    )}
                   </div>
                   <p className="card-text mt-3">{temaModal.descricao}</p>
                 </div>

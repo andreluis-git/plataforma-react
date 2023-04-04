@@ -6,20 +6,6 @@ import {
   LISTAR_TEMAS_CANDIDATURAS,
 } from "../utils/Constants";
 
-// const listarTemasOld = () => {
-//   api
-//     .get("/tema/listarTemas", {
-//       headers: { Authorization: "Bearer " + localStorage.getItem("token") },
-//     })
-//     .then((response) => {
-//       console.log("get sucesso: ", response.data);
-//       return response.data;
-//     })
-//     .catch((error) => {
-//       console.log("erro get :: ", error);
-//     });
-// };
-
 const listarTemas = () =>
   new Promise((resolve, reject) => {
     api
@@ -34,7 +20,7 @@ const listarTemas = () =>
         resolve(response.data);
       })
       .catch((error) => {
-        console.log("erro get :: ", error);
+        console.log("Erro listarTemas :: ", error);
         reject(error);
       });
   });
@@ -53,7 +39,7 @@ const listarTemasAnunciados = () =>
         resolve(response.data);
       })
       .catch((error) => {
-        console.log("erro get :: ", error);
+        console.log("Erro listarTemasAnunciados :: ", error);
         reject(error);
       });
   });
@@ -72,7 +58,7 @@ const listarTemasCandidaturas = () =>
         resolve(response.data);
       })
       .catch((error) => {
-        console.log("erro get :: ", error);
+        console.log("Erro listarTemasCandidaturas :: ", error);
         reject(error);
       });
   });
