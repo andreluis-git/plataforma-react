@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import "./TemasHeader.css";
+import "./PageHeader.css";
 
-const TemasHeader = (props) => {
-  const { pagina } = props;
+const PageHeader = (props) => {
+  const { pagina, buscarTemaPorTitulo } = props;
   const [focusOrdenacaoItem, setFocusOrdenacaoItem] = useState(0);
 
   return (
     <>
-      <div>
+      <div className="container">
         <div className="row">
           <div className="col-6">
             <h3>{pagina}</h3>
-            {window.location.pathname === "/temas" && (
+            {pagina.toLowerCase() === "temas" && (
               <div className="pb-3 pt-2">
                 <button
                   className={`classificacao-temas${
@@ -34,18 +34,29 @@ const TemasHeader = (props) => {
             )}
           </div>
           <div className="col-6 d-flex align-items-center">
-            <div className="input-group">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Buscar tema"
-              />
-              <div className="input-group-append">
-                <button className="btn btn-outline-secondary" type="button">
-                  <SearchIcon />
-                </button>
+            {pagina.toLowerCase() !== "perfil" && (
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Buscar tema"
+                  id="buscarTitulo"
+                />
+                <div className="input-group-append">
+                  <button
+                    className="btn btn-outline-primary"
+                    type="button"
+                    onClick={() => {
+                      buscarTemaPorTitulo(
+                        document.getElementById("buscarTitulo").value
+                      );
+                    }}
+                  >
+                    <SearchIcon />
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
@@ -53,4 +64,4 @@ const TemasHeader = (props) => {
   );
 };
 
-export default TemasHeader;
+export default PageHeader;

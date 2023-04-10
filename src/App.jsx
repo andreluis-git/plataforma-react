@@ -6,7 +6,8 @@ import {
   Routes,
 } from "react-router-dom";
 import "./App.css";
-import Home from "./components/home/Home";
+import Perfil from "./components/perfil/Perfil";
+import Temas from "./components/temas/Temas";
 import Api from "./services/Api";
 
 function App() {
@@ -38,17 +39,18 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/temas" replace />} />
-          <Route exact path="/temas" element={<Home pagina="Temas" />} />
+          <Route exact path="/temas" element={<Temas pagina="Temas" />} />
           <Route
             exact
             path="/anunciados"
-            element={<Home pagina="Anunciados" />}
+            element={<Temas pagina="Anunciados" />}
           />
           <Route
             exact
             path="/candidaturas"
-            element={<Home pagina="Candidaturas" />}
+            element={<Temas pagina="Candidaturas" />}
           />
+          <Route exact path="/perfil" element={<Perfil />} />
         </Routes>
       </Router>
     </div>

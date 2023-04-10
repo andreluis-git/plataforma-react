@@ -3,18 +3,19 @@ import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
-import { rxSetShowNovoTemaModal } from "../../redux/slices/showNovoTemaModalSlice";
-import DisciplinaService from "../../services/DisciplinaService";
+import { rxSetShowNovoTemaModal } from "../../../redux/slices/showNovoTemaModalSlice";
+import DisciplinaService from "../../../services/DisciplinaService";
 import "./NovoTemaModal.css";
 
 // ADICIONAR BOTÃO PARA DAR LIKE NOS TEMAS QUE GOSTA
 const NovoTemaModal = (props) => {
   const [disciplinasInteresse, setDisciplinasInteresse] = useState([]);
-  const [disciplinasCadastradas, setDisciplinasCadastradas] = useState([]);
+  const [disciplinasCadastradas, setDisciplinasCadastradas] =
+    useState(undefined);
   const editarTema = useSelector((state) => state.editarTema.tema);
   const dispatch = useDispatch();
 
-  const { register, handleSubmit, control } = useForm();
+  const { register, handleSubmit, control, setValue } = useForm();
 
   useEffect(() => {
     DisciplinaService.listarDisciplinasPorCurso()
@@ -36,9 +37,10 @@ const NovoTemaModal = (props) => {
         options.push({ value: disciplina.id, label: disciplina.nome })
       );
 
+      setValue("disciplina", options);
       setDisciplinasCadastradas(options);
     }
-  }, [editarTema]);
+  }, [editarTema, setValue]);
 
   const onSubmit = (event) => {
     console.log(JSON.stringify(event));
@@ -96,35 +98,32 @@ const NovoTemaModal = (props) => {
                 <Controller
                   name="disciplinas"
                   control={control}
-                  value={disciplinasCadastradas}
-                  render={({ field }) => {
-                    return (
-                      <Select
-                        isMulti
-                        options={disciplinasInteresse}
-                        closeMenuOnSelect={false}
-                        hideSelectedOptions={true}
-                        allowSelectAll={true}
-                        {...field}
-                        value={field.value || disciplinasCadastradas}
-                      />
-                    );
-                  }}
+                  render={({ field }) => (
+                    <Select
+                      isMulti
+                      options={disciplinasInteresse}
+                      closeMenuOnSelect={false}
+                      hideSelectedOptions={true}
+                      allowSelectAll={true}
+                      {...field}
+                      value={field.value || disciplinasCadastradas}
+                    />
+                  )}
                 />
               </div>
               <div className="modal-footer">
                 {editarTema && (
                   <button
                     type="button"
-                    className="btn btn-secondary"
+                    className="btn btn-outline-danger"
                     onClick={() => {
                       dispatch(rxSetShowNovoTemaModal(false));
                     }}
                   >
-                    Close
+                    Fechar
                   </button>
                 )}
-                <button type="submit" className="btn btn-dark">
+                <button type="submit" className="btn btn-primary">
                   Salvar
                 </button>
               </div>

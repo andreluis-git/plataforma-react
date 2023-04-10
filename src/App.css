@@ -1,6 +1,10 @@
 :root {
   --cor-background: #f0f0f0;
-  --cor-cinzaClaro: #e9ecef;
+  --cor-cinzaClaro: #d3d4d5;
+  --cor-fonteCinza: #575757;
+  --cs-btn-primaria: #189ab4;
+  --cs-btn-primaria-hover: #05445e;
+  --cs-fonte-primaria: #575757;
 }
 
 /* Works on Firefox */
@@ -26,4 +30,105 @@
 
 .app-style {
   background-color: #f0f0f0;
+}
+
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 99999;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.custom-dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.custom-dropdown-content a:hover {
+  /* background-color: #f1f1f1; */
+  background-color: var(--cor-cinzaClaro);
+}
+
+.custom-dropdown:hover .custom-dropdown-content {
+  display: block;
+}
+
+.cursor-pointer:hover {
+  cursor: pointer;
+}
+
+.btn-primario {
+  background-color: var(--cs-btn-primaria);
+  color: white;
+}
+
+.btn-primario:hover {
+  background-color: var(--cs-btn-primaria-hover);
+  color: white;
+}
+
+.btn-primario:focus {
+  background-color: var(--cs-btn-primaria);
+  color: white;
+}
+
+.fw-bold {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.mr-1 {
+  margin-right: 5px;
+}
+
+.mr-2 {
+  margin-right: 10px;
+}
+
+.mr-3 {
+  margin-right: 15px;
+}
+
+.mr-4 {
+  margin-right: 20px;
+}
+
+.mr-5 {
+  margin-right: 25px;
+}
+
+.ml-1 {
+  margin-left: 5px;
+}
+
+.ml-2 {
+  margin-left: 10px;
+}
+
+.ml-3 {
+  margin-left: 15px;
+}
+
+.ml-4 {
+  margin-left: 20px;
+}
+
+.ml-5 {
+  margin-left: 25px;
+}
+
+.subtitle-primary {
+  color: #0d6efd;
 }
