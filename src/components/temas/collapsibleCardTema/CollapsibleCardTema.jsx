@@ -28,6 +28,14 @@ const CollapsibleCardTema = (props) => {
       );
   };
 
+  const candidatarTema = (temaId) => {
+    TemaService.candidatarTema(temaId)
+      .then((response) => {
+        console.log("ModalTema.js candidatarTema sucesso ", response);
+      })
+      .catch((error) => console.log("ModalTema.js candidatarTema ", error));
+  };
+
   return (
     <>
       <div className="card mb-1" ref={contentRef}>
@@ -82,7 +90,14 @@ const CollapsibleCardTema = (props) => {
                 )}
                 {window.location.pathname === "/temas" && (
                   <>
-                    <button className="btn btn-primary">Candidatar-se</button>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        candidatarTema(tema.id);
+                      }}
+                    >
+                      Candidatar-se
+                    </button>
                     <div
                       className="card-icons ml-2"
                       onClick={() => PrintTema.print(tema)}

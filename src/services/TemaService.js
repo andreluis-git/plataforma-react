@@ -3,6 +3,7 @@ import api from "./Api";
 import {
   BUSCAR_TEMAS_ANUNCIADOS_POR_TITULO,
   BUSCAR_TEMAS_POR_TITULO,
+  CANDIDATAR_TEMA,
   LISTAR_CANDIDATOS_TEMA,
   LISTAR_TEMAS,
   LISTAR_TEMAS_ANUNCIADOS,
@@ -114,6 +115,26 @@ const buscarTemasAnunciadosPorTitulo = (titulo) =>
       });
   });
 
+const candidatarTema = (temaId) =>
+  new Promise((resolve, reject) => {
+    api
+      .post(
+        CANDIDATAR_TEMA,
+        {},
+        {
+          params: { temaId },
+          headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+        }
+      )
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log("Erro candidatarTema :: ", error);
+        reject(error);
+      });
+  });
+
 const TemaService = {
   listarTemas,
   listarTemasAnunciados,
@@ -121,6 +142,7 @@ const TemaService = {
   listarCandidatosTema,
   buscarTemasPorTitulo,
   buscarTemasAnunciadosPorTitulo,
+  candidatarTema,
 };
 
 export default TemaService;

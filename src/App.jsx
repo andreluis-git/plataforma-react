@@ -1,57 +1,59 @@
-import React, { useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Navigate,
-  Route,
-  Routes,
-} from "react-router-dom";
+import React from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
+import Home from "./components/home/Home";
+import { AuthProvider } from "./components/hooks/useAuth";
+import Login from "./components/login/Login";
 import Perfil from "./components/perfil/Perfil";
 import Temas from "./components/temas/Temas";
-import Api from "./services/Api";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 function App() {
-  useEffect(() => {
-    login();
-  });
-
-  const login = async () => {
-    await Api
-      // .post("/login", {
-      //   email: "admin@email.com",
-      //   password: "senha",
-      // })
-      .post("/login", {
-        email: "aluno0@email.com",
-        password: "senha",
-      })
-      .then((response) => {
-        console.log("sucesso Login :: ", response);
-        localStorage.setItem("token", response.data);
-      })
-      .catch((error) => {
-        console.log("erro Login :: ", error);
-      });
-  };
-
   return (
     <div className="container-fluid p-0 app-style">
       <Router>
-        <Routes>
-          <Route path="/" element={<Navigate to="/temas" replace />} />
-          <Route exact path="/temas" element={<Temas pagina="Temas" />} />
-          <Route
-            exact
-            path="/anunciados"
-            element={<Temas pagina="Anunciados" />}
-          />
-          <Route
-            exact
-            path="/candidaturas"
-            element={<Temas pagina="Candidaturas" />}
-          />
-          <Route exact path="/perfil" element={<Perfil />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/" element={<Home />} />
+            <Route
+              exact
+              path="/temas"
+              element={
+                <ProtectedRoute>
+                  <Temas pagina="Temas" />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              exact
+              path="/anunciados"
+              element={
+                <ProtectedRoute>
+                  <Temas pagina="Anunciados" />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              exact
+              path="/candidaturas"
+              element={
+                <ProtectedRoute>
+                  <Temas pagina="Candidaturas" />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              exact
+              path="/perfil"
+              element={
+                <ProtectedRoute>
+                  <Perfil />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </AuthProvider>
       </Router>
     </div>
   );

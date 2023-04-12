@@ -1,3 +1,4 @@
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -5,8 +6,8 @@ import { Link } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
 import { rxSetTemaEdicao } from "../../../redux/slices/editarTemaSlice";
 import { rxSetShowNovoTemaModal } from "../../../redux/slices/showNovoTemaModalSlice";
+import { useAuth } from "../../hooks/useAuth";
 import NovoTemaModal from "../../temas/modais/NovoTemaModal";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import "./Header.css";
 
 const Header = (props) => {
@@ -14,6 +15,8 @@ const Header = (props) => {
     (state) => state.showNovoTemaModal.showModal
   );
   const dispatch = useDispatch();
+
+  const { onLogout } = useAuth();
 
   return (
     <>
@@ -69,9 +72,7 @@ const Header = (props) => {
                 <Link to="/perfil" style={{ textDecoration: "none" }}>
                   Perfil
                 </Link>
-                <Link to="/logout" style={{ textDecoration: "none" }}>
-                  Logout
-                </Link>
+                <Link onClick={onLogout}>Logout</Link>
               </div>
             </div>
           </div>
