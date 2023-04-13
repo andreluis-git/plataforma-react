@@ -11,7 +11,7 @@ const PageHeader = (props) => {
       <div className="container">
         <div className="row">
           <div className="col-6">
-            <h3>{pagina}</h3>
+            <span className="titulo-pagina fw-bold">{pagina}</span>
             {pagina.toLowerCase() === "temas" && (
               <div className="pb-3 pt-2">
                 <button
@@ -44,7 +44,7 @@ const PageHeader = (props) => {
                 />
                 <div className="input-group-append">
                   <button
-                    className="btn btn-outline-primary"
+                    className="btn btn-icon"
                     type="button"
                     onClick={() => {
                       buscarTemaPorTitulo(

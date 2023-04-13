@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { rxSetTemaEdicao } from "../../redux/slices/editarTemaSlice";
 import { rxSetShowNovoTemaModal } from "../../redux/slices/showNovoTemaModalSlice";
 import TemaService from "../../services/TemaService";
@@ -7,13 +7,21 @@ import Header from "../shared/header/Header";
 import CollapsibleCard from "./collapsibleCardTema/CollapsibleCardTema";
 import PageHeader from "../shared/pageHeader/PageHeader";
 import "./Temas.css";
+import NovoTemaModal from "./modais/NovoTemaModal";
 
 function Temas(props) {
+  const showNovoTemaModal = useSelector(
+    (state) => state.showNovoTemaModal.showModal
+  );
   const [temas, setTemas] = useState([]);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    buscarTemasLista();
+  }, [props.pagina]);
+
+  const buscarTemasLista = () => {
     switch (window.location.pathname) {
       case "/temas":
         TemaService.listarTemas()
@@ -43,7 +51,7 @@ function Temas(props) {
       default:
         setTemas([]);
     }
-  }, [props.pagina]);
+  };
 
   const buscarTemaPorTitulo = (titulo) => {
     switch (window.location.pathname) {
@@ -84,7 +92,7 @@ function Temas(props) {
         <div className="d-flex justify-content-end">
           <button
             type="button"
-            className="btn btn-primary mb-3"
+            className="btn btn-site mb-3"
             onClick={() => {
               dispatch(rxSetTemaEdicao(null));
               dispatch(rxSetShowNovoTemaModal(true));
@@ -98,6 +106,9 @@ function Temas(props) {
             <CollapsibleCard tema={tema} key={idx}></CollapsibleCard>
           ))}
       </div>
+      {showNovoTemaModal && (
+        <NovoTemaModal buscarTemasLista={buscarTemasLista} />
+      )}
     </>
   );
 }

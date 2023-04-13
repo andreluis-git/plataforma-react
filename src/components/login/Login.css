@@ -1,0 +1,16 @@
+.login-body {
+  height: 100vh;
+  background-color: var(--cs-darkSlate);
+  /* background-repeat: no-repeat; */
+  /* background-image: radial-gradient(var(--cs-silverFox), var(--cs-darkSlate)); */
+  /* background-image: repeating-linear-gradient(
+    45deg,
+    var(--cs-darkSlate),
+    var(--cs-areYaYellow) 100px
+  ); */
+}
+
+.login-body .container div {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

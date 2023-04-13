@@ -155,7 +155,7 @@ const Perfil = (props) => {
             <div className="d-flex justify-content-end">
               <button
                 type="submit"
-                className="btn btn-primary mt-2 mb-2"
+                className="btn btn-site mt-2 mb-2"
                 style={{ minWidth: "110px" }}
               >
                 Salvar

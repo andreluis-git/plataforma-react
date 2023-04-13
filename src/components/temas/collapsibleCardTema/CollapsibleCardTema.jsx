@@ -45,11 +45,11 @@ const CollapsibleCardTema = (props) => {
             setIsOpen(!isOpen);
           }}
         >
-          <div className="p-3">
+          <div className="m-3">
             <div className="d-flex justify-content-between">
               <div>
-                <h6 className="font-weight-bold pb-2">{tema.titulo}</h6>
-                <h6 className="mb-2 subtitle-primary">
+                <h6 className="pb-2 title-color">{tema.titulo}</h6>
+                <h6 className="mb-2 subtitle-color">
                   {tema.criadorTema.cursoAluno.nome}
                 </h6>
               </div>
@@ -68,7 +68,7 @@ const CollapsibleCardTema = (props) => {
                 {window.location.pathname === "/anunciados" && (
                   <>
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-site"
                       onClick={() => {
                         listarCandidatosTema(tema.id);
                         setShowModalCandidatos(true);
@@ -78,7 +78,7 @@ const CollapsibleCardTema = (props) => {
                       Candidatos
                     </button>
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-site"
                       onClick={() => {
                         dispatch(rxSetTemaEdicao(tema));
                         dispatch(rxSetShowNovoTemaModal(true));
@@ -91,7 +91,7 @@ const CollapsibleCardTema = (props) => {
                 {window.location.pathname === "/temas" && (
                   <>
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-site"
                       onClick={() => {
                         candidatarTema(tema.id);
                       }}
@@ -99,7 +99,7 @@ const CollapsibleCardTema = (props) => {
                       Candidatar-se
                     </button>
                     <div
-                      className="card-icons ml-2"
+                      className="card-icons btn-icon-light ml-2"
                       onClick={() => PrintTema.print(tema)}
                       style={{ marginLeft: "10px" }}
                     >

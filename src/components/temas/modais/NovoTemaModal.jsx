@@ -6,6 +6,7 @@ import Select from "react-select";
 import { rxSetShowNovoTemaModal } from "../../../redux/slices/showNovoTemaModalSlice";
 import DisciplinaService from "../../../services/DisciplinaService";
 import "./NovoTemaModal.css";
+import TemaService from "../../../services/TemaService";
 
 // ADICIONAR BOTÃO PARA DAR LIKE NOS TEMAS QUE GOSTA
 const NovoTemaModal = (props) => {
@@ -16,6 +17,8 @@ const NovoTemaModal = (props) => {
   const dispatch = useDispatch();
 
   const { register, handleSubmit, control, setValue } = useForm();
+
+  const { buscarTemasLista } = props;
 
   useEffect(() => {
     DisciplinaService.listarDisciplinasPorCurso()
@@ -43,7 +46,17 @@ const NovoTemaModal = (props) => {
   }, [editarTema, setValue]);
 
   const onSubmit = (event) => {
-    console.log(JSON.stringify(event));
+    if (!editarTema) {
+      console.log("NovoTEMA", JSON.stringify(event));
+      TemaService.cadastrarTema(event)
+        .then((response) => {
+          dispatch(rxSetShowNovoTemaModal(false));
+          buscarTemasLista();
+        })
+        .catch();
+    } else {
+      console.log("EditarTema", JSON.stringify(event));
+    }
   };
 
   return (
@@ -123,7 +136,7 @@ const NovoTemaModal = (props) => {
                     Fechar
                   </button>
                 )}
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-site">
                   Salvar
                 </button>
               </div>

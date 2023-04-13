@@ -6,6 +6,7 @@ export const BUSCAR_TEMAS_ANUNCIADOS_POR_TITULO =
   "/tema/buscarTemasAnunciadosPorTitulo";
 export const LISTAR_CANDIDATOS_TEMA = "/tema/listarCandidatosTema";
 export const CANDIDATAR_TEMA = "/tema/candidatarTema";
+export const CADASTRAR_TEMA = "/tema/gravarTema";
 export const LISTAR_DISCIPLINAS_POR_CURSO =
   "/disciplina/listarDisciplinasPorCurso";
 export const BUSCAR_ALUNO = "/aluno/buscarAluno";

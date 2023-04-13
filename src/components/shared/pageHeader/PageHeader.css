@@ -3,19 +3,24 @@
   padding: 3px 15px;
   border-radius: 30px;
   background-color: white;
-  color: var(--cor-fonteCinza);
+  color: var(--st-fonteClassificacaoTemas);
 }
 
 .classificacao-temas:hover {
-  background-color: var(--cor-cinzaClaro);
+  background-color: var(--st-classificacaoTemasBg);
   cursor: pointer;
 }
 
 .classificacao-temas-focus {
-  background-color: var(--cor-cinzaClaro);
+  background-color: var(--st-classificacaoTemasBg);
   font-weight: bold;
   margin-right: 10px;
   padding: 3px 15px;
   border-radius: 30px;
-  color: var(--cor-fonteCinza);
+  color: var(--st-fonteClassificacaoTemas);
+}
+
+.titulo-pagina {
+  font-size: 30px;
+  color: var(--st-fontePageHeader);
 }

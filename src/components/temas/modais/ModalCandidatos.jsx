@@ -1,6 +1,6 @@
 import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
-import CollapsibleCardCandidatos from "../collapsibleCardCandidatos/CollapsibleCardCadidatos";
+import CollapsibleCardCandidatos from "../collapsibleCardCandidatos/CollapsibleCardCandidatos";
 import "./ModalCandidatos.css";
 
 const ModalCandidatos = (props) => {

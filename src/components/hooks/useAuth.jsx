@@ -12,10 +12,10 @@ export const AuthProvider = ({ children }) => {
     (data) => {
       console.log(data);
       Api.post("/login", {
-        email: "aluno2@email.com",
-        password: "senha",
-        // email: data.email,
-        // password: data.senha,
+        // email: "aluno2@email.com",
+        // password: "senha",
+        email: data.email,
+        password: data.senha,
       })
         .then((response) => {
           console.log("sucesso Login :: ", response);

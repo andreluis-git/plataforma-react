@@ -2,7 +2,9 @@
   height: 10vh;
   display: flex;
   align-items: center;
-  background-color: white;
+  /* background-color: var(--cs-azulPrimary); */
+  background-color: var(--cs-darkSlate);
+
   /* background: rgb(0, 0, 0);
   background: linear-gradient(
     90deg,
@@ -10,17 +12,10 @@
     #77149e 50%,
     rgba(9, 9, 9, 1) 100%
   ); */
-  border-bottom: 1px solid;
-}
 
-.btn-header {
-  padding: 10px;
-  /* color: black; */
-  color: var(--cor-fonteCinza);
-  border: solid 0.1em;
-  border-color: #79090900;
-  font-weight: bold;
-  font-size: 15px;
+  /* background-repeat: no-repeat;
+  background-image: linear-gradient(rgb(11, 137, 255), rgb(0, 37, 204)); */
+  border-bottom: 1px solid;
 }
 
 .logo-bg {
@@ -33,9 +28,4 @@
   width: 38px;
   height: 38px;
   border-radius: 5px;
-  background-color: #f8f9fa;
-}
-
-.btn-perfil:hover {
-  background-color: var(--cor-cinzaClaro);
 }

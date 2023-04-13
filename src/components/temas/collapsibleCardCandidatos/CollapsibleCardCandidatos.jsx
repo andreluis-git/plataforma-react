@@ -8,6 +8,8 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import EmailIcon from "@mui/icons-material/Email";
 import { Link } from "react-router-dom";
 
+import "./CollapsibleCardCandidatos.css";
+
 const CollapsibleCardCandidatos = (props) => {
   const { candidato, tema } = props;
   const contentRef = useRef();
@@ -29,10 +31,10 @@ const CollapsibleCardCandidatos = (props) => {
       <div className="p-3">
         <div className="d-flex justify-content-between">
           <div>
-            <h6 className="font-weight-bold pb-2">{candidato.nome}</h6>
-            <h6 className="mb-2 subtitle-primary">
-              {candidato.cursoAluno.nome}
+            <h6 className="font-weight-bold pb-2 title-color">
+              {candidato.nome}
             </h6>
+            <h6 className="mb-2 subtitle-color">{candidato.cursoAluno.nome}</h6>
           </div>
           <div>
             {candidato.whatsapp && <WhatsAppIcon />}
@@ -40,8 +42,15 @@ const CollapsibleCardCandidatos = (props) => {
             {candidato.instagram && <InstagramIcon />}
             {candidato.facebook && <FacebookIcon />}
             {candidato.email && (
-              <Link to={montarEmail} style={{ color: "var(--cor-fonteCinza)" }}>
-                <EmailIcon />
+              <Link to={montarEmail}>
+                <div className="btn-icon-candidatos btn-icon-light d-flex justify-content-center align-items-center">
+                  <EmailIcon
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  />
+                </div>
               </Link>
             )}
           </div>

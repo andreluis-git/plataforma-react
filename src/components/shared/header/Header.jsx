@@ -1,19 +1,15 @@
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
 import { rxSetTemaEdicao } from "../../../redux/slices/editarTemaSlice";
 import { rxSetShowNovoTemaModal } from "../../../redux/slices/showNovoTemaModalSlice";
 import { useAuth } from "../../hooks/useAuth";
-import NovoTemaModal from "../../temas/modais/NovoTemaModal";
 import "./Header.css";
 
 const Header = (props) => {
-  const showNovoTemaModal = useSelector(
-    (state) => state.showNovoTemaModal.showModal
-  );
   const dispatch = useDispatch();
 
   const { onLogout } = useAuth();
@@ -25,13 +21,13 @@ const Header = (props) => {
           <div className="d-flex align-items-center itens-esquerda">
             <img src={logo} alt="logo" className="logo-bg" />
             <Link to="/temas" style={{ textDecoration: "none" }}>
-              <button type="button" className="btn btn-light fw-bold mr-1">
+              <button type="button" className="btn btn-site fw-bold mr-1">
                 Temas
               </button>
             </Link>
             <button
               type="button"
-              className="btn btn-light fw-bold"
+              className="btn btn-site fw-bold"
               onClick={() => {
                 dispatch(rxSetShowNovoTemaModal(true));
                 dispatch(rxSetTemaEdicao(null));
@@ -44,7 +40,7 @@ const Header = (props) => {
             <div className="custom-dropdown" style={{ left: "left" }}>
               <button
                 type="button"
-                className="btn btn-light"
+                className="btn btn-site"
                 style={{ cursor: "default" }}
               >
                 <span className="fw-bold">Meus temas</span>
@@ -60,7 +56,7 @@ const Header = (props) => {
               </div>
             </div>
             <div className={"custom-dropdown"} style={{ float: "right" }}>
-              <div className="btn-perfil ml-1">
+              <div className="btn-perfil btn-icon ml-1">
                 <PersonOutlineIcon
                   style={{
                     width: "100%",
@@ -78,7 +74,6 @@ const Header = (props) => {
           </div>
         </div>
       </div>
-      {showNovoTemaModal && <NovoTemaModal />}
     </>
   );
 };
