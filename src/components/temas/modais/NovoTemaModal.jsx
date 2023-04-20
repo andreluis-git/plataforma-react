@@ -7,6 +7,7 @@ import { rxSetShowNovoTemaModal } from "../../../redux/slices/showNovoTemaModalS
 import DisciplinaService from "../../../services/DisciplinaService";
 import "./NovoTemaModal.css";
 import TemaService from "../../../services/TemaService";
+import { rxSetListaTemas } from "../../../redux/slices/listaTemasSlice";
 
 // ADICIONAR BOTÃO PARA DAR LIKE NOS TEMAS QUE GOSTA
 const NovoTemaModal = (props) => {
@@ -18,7 +19,11 @@ const NovoTemaModal = (props) => {
 
   const { register, handleSubmit, control, setValue } = useForm();
 
-  const { buscarTemasLista } = props;
+  const buscarTemasLista = (pagina) => {
+    TemaService.buscarTemaPorPagina(pagina).then((response) => {
+      dispatch(rxSetListaTemas(response));
+    });
+  };
 
   useEffect(() => {
     DisciplinaService.listarDisciplinasPorCurso()
@@ -51,7 +56,7 @@ const NovoTemaModal = (props) => {
       TemaService.cadastrarTema(event)
         .then((response) => {
           dispatch(rxSetShowNovoTemaModal(false));
-          buscarTemasLista();
+          buscarTemasLista(window.location.pathname.replace("/", ""));
         })
         .catch();
     } else {

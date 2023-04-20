@@ -39,7 +39,7 @@ const PageHeader = (props) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Buscar tema"
+                  placeholder="Digite o tema ou assunto de interesse"
                   id="buscarTitulo"
                 />
                 <div className="input-group-append">

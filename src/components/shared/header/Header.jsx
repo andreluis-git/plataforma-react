@@ -1,6 +1,6 @@
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
@@ -8,11 +8,28 @@ import { rxSetTemaEdicao } from "../../../redux/slices/editarTemaSlice";
 import { rxSetShowNovoTemaModal } from "../../../redux/slices/showNovoTemaModalSlice";
 import { useAuth } from "../../hooks/useAuth";
 import "./Header.css";
+import TemaService from "../../../services/TemaService";
+import { rxSetListaTemas } from "../../../redux/slices/listaTemasSlice";
 
 const Header = (props) => {
   const dispatch = useDispatch();
 
   const { onLogout } = useAuth();
+
+  // const { buscarTemasLista } = props;
+
+  const buscarTemasLista = useCallback(
+    (pagina) => {
+      TemaService.buscarTemaPorPagina(pagina).then((response) => {
+        dispatch(rxSetListaTemas(response));
+      });
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    buscarTemasLista(window.location.pathname.replace("/", ""));
+  }, [buscarTemasLista]);
 
   return (
     <>
@@ -21,7 +38,11 @@ const Header = (props) => {
           <div className="d-flex align-items-center itens-esquerda">
             <img src={logo} alt="logo" className="logo-bg" />
             <Link to="/temas" style={{ textDecoration: "none" }}>
-              <button type="button" className="btn btn-site fw-bold mr-1">
+              <button
+                type="button"
+                className="btn btn-site fw-bold mr-1"
+                onClick={() => buscarTemasLista("temas")}
+              >
                 Temas
               </button>
             </Link>
@@ -31,6 +52,7 @@ const Header = (props) => {
               onClick={() => {
                 dispatch(rxSetShowNovoTemaModal(true));
                 dispatch(rxSetTemaEdicao(null));
+                buscarTemasLista(window.location.pathname.replace("/", ""));
               }}
             >
               Anunciar tema
@@ -47,10 +69,18 @@ const Header = (props) => {
                 <ArrowDropDownIcon fontSize="small" />
               </button>
               <div className={"custom-dropdown-content"} style={{ left: "0" }}>
-                <Link to="/anunciados" style={{ textDecoration: "none" }}>
+                <Link
+                  to="/anunciados"
+                  style={{ textDecoration: "none" }}
+                  onClick={() => buscarTemasLista("anunciados")}
+                >
                   Anunciados
                 </Link>
-                <Link to="/candidaturas" style={{ textDecoration: "none" }}>
+                <Link
+                  to="/candidaturas"
+                  style={{ textDecoration: "none" }}
+                  onClick={() => buscarTemasLista("candidaturas")}
+                >
                   Candidaturas
                 </Link>
               </div>

@@ -2,6 +2,7 @@ import DateFormatUtil from "../utils/DateFormatUtil";
 import api from "./Api";
 import {
   BUSCAR_TEMAS_ANUNCIADOS_POR_TITULO,
+  BUSCAR_TEMAS_CANDIDATURAS_POR_TITULO,
   BUSCAR_TEMAS_POR_TITULO,
   CADASTRAR_TEMA,
   CANDIDATAR_TEMA,
@@ -84,11 +85,11 @@ const listarCandidatosTema = (temaId) =>
       });
   });
 
-const buscarTemasPorTitulo = (titulo) =>
+const buscarTemasPorTitulo = (texto) =>
   new Promise((resolve, reject) => {
     api
       .get(BUSCAR_TEMAS_POR_TITULO, {
-        params: { titulo },
+        params: { texto },
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((response) => {
@@ -100,18 +101,34 @@ const buscarTemasPorTitulo = (titulo) =>
       });
   });
 
-const buscarTemasAnunciadosPorTitulo = (titulo) =>
+const buscarTemasAnunciadosPorTitulo = (texto) =>
   new Promise((resolve, reject) => {
     api
       .get(BUSCAR_TEMAS_ANUNCIADOS_POR_TITULO, {
-        params: { titulo },
+        params: { texto },
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((response) => {
         resolve(response.data);
       })
       .catch((error) => {
-        console.log("Erro buscarTemaPorTitulo :: ", error);
+        console.log("Erro buscarTemasAnunciadosPorTitulo :: ", error);
+        reject(error);
+      });
+  });
+
+const buscarTemasCandidaturasPorTitulo = (texto) =>
+  new Promise((resolve, reject) => {
+    api
+      .get(BUSCAR_TEMAS_CANDIDATURAS_POR_TITULO, {
+        params: { texto },
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log("Erro buscarTemasCandidaturasPorTitulo :: ", error);
         reject(error);
       });
   });
@@ -163,6 +180,39 @@ const cadastrarTema = (tema) =>
       });
   });
 
+const buscarTemaPorPagina = (pagina) =>
+  new Promise((resolve, reject) => {
+    switch (pagina) {
+      case "temas":
+        listarTemas()
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((error) => console.log("Temas.js listarTemas", error));
+        break;
+      case "anunciados":
+        listarTemasAnunciados()
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((error) =>
+            console.log("Temas.js listarTemasAnunciados", error)
+          );
+        break;
+      case "candidaturas":
+        listarTemasCandidaturas()
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((error) =>
+            console.log("Temas.js listarTemasCandidaturas", error)
+          );
+        break;
+      default:
+        resolve([]);
+    }
+  });
+
 const TemaService = {
   listarTemas,
   listarTemasAnunciados,
@@ -170,8 +220,10 @@ const TemaService = {
   listarCandidatosTema,
   buscarTemasPorTitulo,
   buscarTemasAnunciadosPorTitulo,
+  buscarTemasCandidaturasPorTitulo,
   candidatarTema,
   cadastrarTema,
+  buscarTemaPorPagina,
 };
 
 export default TemaService;
