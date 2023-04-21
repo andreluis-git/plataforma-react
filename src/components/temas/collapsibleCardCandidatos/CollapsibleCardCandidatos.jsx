@@ -16,14 +16,49 @@ const CollapsibleCardCandidatos = (props) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const montarEmail = () => {
+  const enviarEmail = () => {
+    console.log("ENVIO EMAIL");
     const emailBody = `Olá ${candidato.nome}, tudo bem? \nEste e-mail é referente a sua participação no desenvolvimento do trabalho "${tema.titulo}", gostaria de saber se ainda possui interesse?\n\nAtenciosamente.`;
 
     const sendEmail = `mailto:${candidato.email}?subject=${
       tema.titulo
     }&body=${encodeURIComponent(emailBody)}`;
 
-    return sendEmail;
+    window.open(sendEmail);
+  };
+
+  const enviarWhatsapp = () => {
+    console.log(
+      "ENVIO Whats ",
+      `https://wa.me/55${candidato.whatsapp.replace(/[^\w]/g, "")}`
+    );
+    // const emailBody = `Olá ${candidato.nome}, tudo bem? \nEste e-mail é referente a sua participação no desenvolvimento do trabalho "${tema.titulo}", gostaria de saber se ainda possui interesse?\n\nAtenciosamente.`;
+
+    // const sendEmail = `mailto:${candidato.email}?subject=${
+    //   tema.titulo
+    // }&body=${encodeURIComponent(emailBody)}`;
+
+    window.open(`https://wa.me/55${candidato.whatsapp.replace(/[^\w]/g, "")}`);
+  };
+
+  const abrirInstagram = () => {
+    console.log(
+      "ENVIO Whats ",
+      `https://wa.me/55${candidato.whatsapp.replace(/[^\w]/g, "")}`
+    );
+    // const emailBody = `Olá ${candidato.nome}, tudo bem? \nEste e-mail é referente a sua participação no desenvolvimento do trabalho "${tema.titulo}", gostaria de saber se ainda possui interesse?\n\nAtenciosamente.`;
+
+    // const sendEmail = `mailto:${candidato.email}?subject=${
+    //   tema.titulo
+    // }&body=${encodeURIComponent(emailBody)}`;
+
+    window.open(
+      `https://www.instagram.com/${
+        candidato.instagram.charAt(0) == "@"
+          ? candidato.instagram.slice(1)
+          : candidato.instagram
+      }`
+    );
   };
 
   return (
@@ -36,22 +71,45 @@ const CollapsibleCardCandidatos = (props) => {
             </h6>
             <h6 className="mb-2 subtitle-color">{candidato.cursoAluno.nome}</h6>
           </div>
-          <div>
-            {candidato.whatsapp && <WhatsAppIcon />}
-            {candidato.linkedin && <LinkedInIcon />}
-            {candidato.instagram && <InstagramIcon />}
-            {candidato.facebook && <FacebookIcon />}
+          <div className="d-flex justify-content-center align-items-center">
+            {candidato.whatsapp && (
+              <div
+                className="btn-icon-candidatos btn-icon-light d-flex justify-content-center align-items-center cursor-pointer"
+                onClick={enviarWhatsapp}
+              >
+                <WhatsAppIcon />
+              </div>
+            )}
+            {candidato.linkedin && (
+              <div className="btn-icon-candidatos btn-icon-light d-flex justify-content-center align-items-center cursor-pointer">
+                <LinkedInIcon />
+              </div>
+            )}
+            {candidato.instagram && (
+              <div
+                className="btn-icon-candidatos btn-icon-light d-flex justify-content-center align-items-center cursor-pointer"
+                onClick={abrirInstagram}
+              >
+                <InstagramIcon />
+              </div>
+            )}
+            {candidato.facebook && (
+              <div className="btn-icon-candidatos btn-icon-light d-flex justify-content-center align-items-center cursor-pointer">
+                <FacebookIcon />
+              </div>
+            )}
             {candidato.email && (
-              <Link to={montarEmail}>
-                <div className="btn-icon-candidatos btn-icon-light d-flex justify-content-center align-items-center">
-                  <EmailIcon
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  />
-                </div>
-              </Link>
+              <div
+                className="btn-icon-candidatos btn-icon-light d-flex justify-content-center align-items-center cursor-pointer"
+                onClick={enviarEmail}
+              >
+                <EmailIcon
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+              </div>
             )}
           </div>
         </div>

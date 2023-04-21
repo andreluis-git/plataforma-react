@@ -19,7 +19,6 @@ const Perfil = (props) => {
   useEffect(() => {
     AlunoService.buscarAluno()
       .then((response) => {
-        console.log("Aluno", response);
         setAluno(response);
         let options = [];
         response.disciplinasInteresse.map((disciplina) =>
@@ -43,7 +42,6 @@ const Perfil = (props) => {
     DisciplinaService.listarDisciplinasPorCurso()
       .then((response) => {
         let options = [];
-        // console.log("disciplina", response);
         response.map((disciplina) =>
           options.push({ value: disciplina.id, label: disciplina.nome })
         );

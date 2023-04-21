@@ -199,7 +199,7 @@ const editarTema = (tema) =>
         resolve(response.data);
       })
       .catch((error) => {
-        console.log("Erro candidatarTema :: ", error);
+        console.log("Erro editarTema :: ", error);
         reject(error);
       });
   });
@@ -212,7 +212,7 @@ const buscarTemaPorPagina = (pagina) =>
           .then((response) => {
             resolve(response);
           })
-          .catch((error) => console.log("Temas.js listarTemas", error));
+          .catch((error) => console.log("TemaService listarTemas", error));
         break;
       case "anunciados":
         listarTemasAnunciados()
@@ -220,7 +220,7 @@ const buscarTemaPorPagina = (pagina) =>
             resolve(response);
           })
           .catch((error) =>
-            console.log("Temas.js listarTemasAnunciados", error)
+            console.log("TemaService listarTemasAnunciados", error)
           );
         break;
       case "candidaturas":
@@ -229,7 +229,7 @@ const buscarTemaPorPagina = (pagina) =>
             resolve(response);
           })
           .catch((error) =>
-            console.log("Temas.js listarTemasCandidaturas", error)
+            console.log("TemaService listarTemasCandidaturas", error)
           );
         break;
       default:

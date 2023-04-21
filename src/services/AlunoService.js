@@ -22,7 +22,6 @@ const editarAluno = (aluno) =>
       (disciplina) => (disciplina.id = disciplina.value)
     );
 
-    console.log("Aluno Envio", aluno);
     api
       .put(
         EDITAR_ALUNO,
