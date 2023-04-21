@@ -6,6 +6,7 @@ import {
   BUSCAR_TEMAS_POR_TITULO,
   CADASTRAR_TEMA,
   CANDIDATAR_TEMA,
+  EDITAR_TEMA,
   LISTAR_CANDIDATOS_TEMA,
   LISTAR_TEMAS,
   LISTAR_TEMAS_ANUNCIADOS,
@@ -155,15 +156,38 @@ const candidatarTema = (temaId) =>
 
 const cadastrarTema = (tema) =>
   new Promise((resolve, reject) => {
-    tema.disciplinasRelacionadas = [];
-    tema.disciplinas?.map((disciplina) =>
-      tema.disciplinasRelacionadas.push({ id: disciplina.value })
+    tema.disciplinasRelacionadas?.map(
+      (disciplina) => (disciplina.id = disciplina.value)
     );
 
-    console.log("TEMA NA SERVICE", tema);
     api
       .post(
         CADASTRAR_TEMA,
+        {
+          ...tema,
+        },
+        {
+          headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+        }
+      )
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log("Erro candidatarTema :: ", error);
+        reject(error);
+      });
+  });
+
+const editarTema = (tema) =>
+  new Promise((resolve, reject) => {
+    tema.disciplinasRelacionadas?.map(
+      (disciplina) => (disciplina.id = disciplina.value)
+    );
+
+    api
+      .put(
+        EDITAR_TEMA,
         {
           ...tema,
         },
@@ -223,6 +247,7 @@ const TemaService = {
   buscarTemasCandidaturasPorTitulo,
   candidatarTema,
   cadastrarTema,
+  editarTema,
   buscarTemaPorPagina,
 };
 

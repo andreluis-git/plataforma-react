@@ -6,6 +6,13 @@ const PageHeader = (props) => {
   const { pagina, buscarTemaPorTitulo } = props;
   const [focusOrdenacaoItem, setFocusOrdenacaoItem] = useState(0);
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    buscarTemaPorTitulo(document.getElementById("buscarTitulo").value);
+    document.getElementById("buscarTitulo").value = "";
+  };
+
   return (
     <>
       <div className="container">
@@ -35,27 +42,21 @@ const PageHeader = (props) => {
           </div>
           <div className="col-6 d-flex align-items-center">
             {pagina.toLowerCase() !== "perfil" && (
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Digite o tema ou assunto de interesse"
-                  id="buscarTitulo"
-                />
-                <div className="input-group-append">
-                  <button
-                    className="btn btn-icon"
-                    type="button"
-                    onClick={() => {
-                      buscarTemaPorTitulo(
-                        document.getElementById("buscarTitulo").value
-                      );
-                    }}
-                  >
-                    <SearchIcon />
-                  </button>
+              <form onSubmit={handleSubmit} className="w-100">
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Digite o tema ou assunto de interesse"
+                    id="buscarTitulo"
+                  />
+                  <div className="input-group-append">
+                    <button className="btn btn-icon" type="submit">
+                      <SearchIcon />
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </form>
             )}
           </div>
         </div>

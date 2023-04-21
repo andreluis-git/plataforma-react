@@ -11,12 +11,7 @@ import CollapsibleCard from "./collapsibleCardTema/CollapsibleCardTema";
 import NovoTemaModal from "./modais/NovoTemaModal";
 
 function Temas(props) {
-  const showNovoTemaModal = useSelector(
-    (state) => state.showNovoTemaModal.showModal
-  );
-
   const temas = useSelector((state) => state.listaTemas.temas);
-  // const [temas, setTemas] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -25,7 +20,6 @@ function Temas(props) {
       case "/temas":
         TemaService.buscarTemasPorTitulo(texto)
           .then((response) => {
-            // setTemas(response);
             dispatch(rxSetListaTemas(response));
           })
           .catch((error) => console.log("Temas.js buscarTemaPorTitulo", error));
@@ -33,7 +27,6 @@ function Temas(props) {
       case "/anunciados":
         TemaService.buscarTemasAnunciadosPorTitulo(texto)
           .then((response) => {
-            // setTemas(response);
             dispatch(rxSetListaTemas(response));
           })
           .catch((error) =>
@@ -43,7 +36,6 @@ function Temas(props) {
       case "/candidaturas":
         TemaService.buscarTemasCandidaturasPorTitulo(texto)
           .then((response) => {
-            // setTemas(response);
             dispatch(rxSetListaTemas(response));
           })
           .catch((error) =>
@@ -51,7 +43,6 @@ function Temas(props) {
           );
         break;
       default:
-        // setTemas([]);
         dispatch(rxSetListaTemas([]));
     }
   };
@@ -83,7 +74,6 @@ function Temas(props) {
             <CollapsibleCard tema={tema} key={idx}></CollapsibleCard>
           ))}
       </div>
-      {showNovoTemaModal && <NovoTemaModal />}
     </>
   );
 }

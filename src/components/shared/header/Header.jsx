@@ -1,7 +1,7 @@
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import React, { useCallback, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
 import { rxSetTemaEdicao } from "../../../redux/slices/editarTemaSlice";
@@ -10,8 +10,13 @@ import { useAuth } from "../../hooks/useAuth";
 import "./Header.css";
 import TemaService from "../../../services/TemaService";
 import { rxSetListaTemas } from "../../../redux/slices/listaTemasSlice";
+import NovoTemaModal from "../../temas/modais/NovoTemaModal";
 
 const Header = (props) => {
+  const showNovoTemaModal = useSelector(
+    (state) => state.showNovoTemaModal.showModal
+  );
+
   const dispatch = useDispatch();
 
   const { onLogout } = useAuth();
@@ -104,6 +109,7 @@ const Header = (props) => {
           </div>
         </div>
       </div>
+      {showNovoTemaModal && <NovoTemaModal />}
     </>
   );
 };

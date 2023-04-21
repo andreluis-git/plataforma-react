@@ -45,14 +45,13 @@ const NovoTemaModal = (props) => {
         options.push({ value: disciplina.id, label: disciplina.nome })
       );
 
-      setValue("disciplina", options);
+      setValue("disciplinasRelacionadas", options);
       setDisciplinasCadastradas(options);
     }
   }, [editarTema, setValue]);
 
   const onSubmit = (event) => {
     if (!editarTema) {
-      console.log("NovoTEMA", JSON.stringify(event));
       TemaService.cadastrarTema(event)
         .then((response) => {
           dispatch(rxSetShowNovoTemaModal(false));
@@ -60,7 +59,14 @@ const NovoTemaModal = (props) => {
         })
         .catch();
     } else {
-      console.log("EditarTema", JSON.stringify(event));
+      let temaEditado = { ...editarTema };
+      Object.keys(event).map((key) => (temaEditado[key] = event[key]));
+      TemaService.editarTema(temaEditado)
+        .then((response) => {
+          dispatch(rxSetShowNovoTemaModal(false));
+          buscarTemasLista(window.location.pathname.replace("/", ""));
+        })
+        .catch();
     }
   };
 
@@ -114,7 +120,7 @@ const NovoTemaModal = (props) => {
                 </div>
                 <label>Temas Interesse</label>
                 <Controller
-                  name="disciplinas"
+                  name="disciplinasRelacionadas"
                   control={control}
                   render={({ field }) => (
                     <Select

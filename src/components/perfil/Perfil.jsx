@@ -19,17 +19,23 @@ const Perfil = (props) => {
   useEffect(() => {
     AlunoService.buscarAluno()
       .then((response) => {
-        console.log(response);
+        console.log("Aluno", response);
         setAluno(response);
         let options = [];
         response.disciplinasInteresse.map((disciplina) =>
           options.push({ value: disciplina.id, label: disciplina.nome })
         );
 
-        setValue("nomeCompleto", response.nome);
+        setValue("id", response.id);
+        setValue("nome", response.nome);
         setValue("email", response.email);
         setValue("cursoAluno", response.cursoAluno);
         setValue("disciplinasInteresse", options);
+        setValue("whatsapp", response.whatsapp || "");
+        setValue("facebook", response.facebook || "");
+        setValue("linkedin", response.linkedin || "");
+        setValue("instagram", response.instagram || "");
+        setValue("sobre", response.sobre || "");
         setDisciplinasCadastradas(options);
       })
       .catch((error) => console.log("Perfil.js buscarAluno ", error));
@@ -37,7 +43,7 @@ const Perfil = (props) => {
     DisciplinaService.listarDisciplinasPorCurso()
       .then((response) => {
         let options = [];
-        console.log("disciplina", response);
+        // console.log("disciplina", response);
         response.map((disciplina) =>
           options.push({ value: disciplina.id, label: disciplina.nome })
         );
@@ -50,7 +56,10 @@ const Perfil = (props) => {
   }, [setValue]);
 
   const onSubmit = (event) => {
-    console.log(JSON.stringify(event));
+    // console.log(JSON.stringify(event));
+    let alunoEditado = { ...aluno };
+    Object.keys(event).map((key) => (alunoEditado[key] = event[key]));
+    AlunoService.editarAluno(alunoEditado).then().catch();
   };
 
   return (
@@ -64,27 +73,17 @@ const Perfil = (props) => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group mb-2">
               <label>Nome Completo</label>
-              <input
-                className="form-control"
-                {...register("nomeCompleto")}
-                defaultValue={aluno.nome}
-                disabled
-              />
+              <input className="form-control" {...register("nome")} disabled />
             </div>
             <div className="form-group mb-2">
               <label>Email *</label>
-              <input
-                className="form-control"
-                {...register("email")}
-                defaultValue={aluno.email}
-                disabled
-              />
+              <input className="form-control" {...register("email")} disabled />
             </div>
             <div className="form-group mb-2">
               <label>Curso*</label>
               <input
                 className="form-control"
-                {...register("cursoALuno")}
+                // {...register("cursoAluno")}
                 defaultValue={aluno.cursoAluno.nome}
                 disabled
               />
@@ -95,7 +94,6 @@ const Perfil = (props) => {
                 className="form-control"
                 {...register("sobre")}
                 rows="5"
-                defaultValue={aluno.sobre}
                 maxLength={2000}
                 onChange={(e) => setContadorLetrasSobre(e.target.value.length)}
               />
@@ -105,35 +103,19 @@ const Perfil = (props) => {
             </div>
             <div className="form-group mb-2">
               <label>Whatsapp</label>
-              <input
-                className="form-control"
-                {...register("whatsapp")}
-                defaultValue={aluno.whatsapp}
-              />
+              <input className="form-control" {...register("whatsapp")} />
             </div>
             <div className="form-group mb-2">
               <label>Facebook</label>
-              <input
-                className="form-control"
-                {...register("facebook")}
-                defaultValue={aluno.facebook}
-              />
+              <input className="form-control" {...register("facebook")} />
             </div>
             <div className="form-group mb-2">
               <label>Linkedin</label>
-              <input
-                className="form-control"
-                {...register("linkedin")}
-                defaultValue={aluno.linkedin}
-              />
+              <input className="form-control" {...register("linkedin")} />
             </div>
             <div className="form-group mb-2">
               <label>Instagram</label>
-              <input
-                className="form-control"
-                {...register("instagram")}
-                defaultValue={aluno.instagram}
-              />
+              <input className="form-control" {...register("instagram")} />
             </div>
             <label>Temas Interesse</label>
             <Controller

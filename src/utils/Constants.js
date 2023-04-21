@@ -9,6 +9,10 @@ export const BUSCAR_TEMAS_CANDIDATURAS_POR_TITULO =
 export const LISTAR_CANDIDATOS_TEMA = "/tema/listarCandidatosTema";
 export const CANDIDATAR_TEMA = "/tema/candidatarTema";
 export const CADASTRAR_TEMA = "/tema/gravarTema";
+export const EDITAR_TEMA = "/tema/editarTema";
+
 export const LISTAR_DISCIPLINAS_POR_CURSO =
   "/disciplina/listarDisciplinasPorCurso";
+
 export const BUSCAR_ALUNO = "/aluno/buscarAluno";
+export const EDITAR_ALUNO = "/aluno/editarAluno";
