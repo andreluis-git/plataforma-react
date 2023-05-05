@@ -1,5 +1,5 @@
 import PrintIcon from "@mui/icons-material/Print";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { rxSetTemaEdicao } from "../../../redux/slices/editarTemaSlice";
 import { rxSetShowNovoTemaModal } from "../../../redux/slices/showNovoTemaModalSlice";
@@ -7,15 +7,21 @@ import TemaService from "../../../services/TemaService";
 import PrintTema from "../../../utils/PrintTemaUtil";
 import Truncate from "../../../utils/TruncateString";
 import ModalCandidatos from "../modais/ModalCandidatos";
+import { rxSetListaTemas } from "../../../redux/slices/listaTemasSlice";
 
 const CollapsibleCardTema = (props) => {
-  const { tema } = props;
+  const { tema, hasCandidatos, setTemaExclusao } = props;
   const contentRef = useRef();
   const dispatch = useDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
   const [showModalCandidatos, setShowModalCandidatos] = useState(false);
   const [candidatosTema, setCandidatosTema] = useState([]);
+
+  useEffect(() => {
+    setIsOpen(false);
+    // console.log(tema);
+  }, [tema]);
 
   const listarCandidatosTema = (temaId) => {
     TemaService.listarCandidatosTema(temaId)
@@ -34,6 +40,34 @@ const CollapsibleCardTema = (props) => {
         console.log("ModalTema.js candidatarTema sucesso ", response);
       })
       .catch((error) => console.log("ModalTema.js candidatarTema ", error));
+  };
+
+  const removerCandidaturaTema = (temaId) => {
+    TemaService.removerCandidaturaTema(temaId)
+      .then((response) => {
+        buscarTemasLista();
+      })
+      .catch((error) =>
+        console.log("ModalTema.js removerCandidaturaTema ", error)
+      );
+  };
+
+  const buscarTemasLista = () => {
+    TemaService.buscarTemaPorPagina(
+      window.location.pathname.replace("/", "")
+    ).then((response) => {
+      dispatch(rxSetListaTemas(response));
+    });
+  };
+
+  const chanceStatusTema = (tema) => {
+    let temaEditado = { ...tema, ativo: !tema.ativo };
+    // console.log(temaEditado);
+    TemaService.editarTema(temaEditado)
+      .then((response) => {
+        buscarTemasLista();
+      })
+      .catch();
   };
 
   return (
@@ -55,18 +89,10 @@ const CollapsibleCardTema = (props) => {
               </div>
               <span>{tema.dataCriacao}</span>
             </div>
-            <hr className="separador" />
-            {!isOpen && (
-              <p className="card-text">{Truncate(tema.descricao, 300)}</p>
-            )}
-          </div>
-        </div>
-        <>
-          {isOpen && (
-            <div className="p-3 pt-0">
-              <div className="d-flex align-items-center">
-                {window.location.pathname === "/anunciados" && (
-                  <>
+            {window.location.pathname === "/anunciados" && (
+              <div className="d-flex justify-content-between">
+                <div>
+                  {hasCandidatos && (
                     <button
                       className="btn btn-site"
                       onClick={() => {
@@ -75,43 +101,75 @@ const CollapsibleCardTema = (props) => {
                       }}
                       style={{ marginRight: "10px" }}
                     >
-                      Candidatos
+                      {tema.candidatosTema.length} Candidato
+                      {tema.candidatosTema.length > 1 ? "s" : ""}
                     </button>
-                    <button
-                      className="btn btn-site"
-                      onClick={() => {
-                        dispatch(rxSetTemaEdicao(tema));
-                        dispatch(rxSetShowNovoTemaModal(true));
-                      }}
-                    >
-                      Editar
-                    </button>
-                  </>
-                )}
-                {window.location.pathname === "/temas" && (
-                  <>
-                    <button
-                      className="btn btn-site"
-                      onClick={() => {
-                        candidatarTema(tema.id);
-                      }}
-                    >
-                      Candidatar-se
-                    </button>
-                    <div
-                      className="card-icons btn-icon-light ml-2"
-                      onClick={() => PrintTema.print(tema)}
-                      style={{ marginLeft: "10px" }}
-                    >
-                      <PrintIcon className="m-2" />
-                    </div>
-                  </>
-                )}
+                  )}
+                  <button
+                    className="btn btn-site"
+                    onClick={() => {
+                      dispatch(rxSetTemaEdicao(tema));
+                      dispatch(rxSetShowNovoTemaModal(true));
+                      setTemaExclusao(tema);
+                    }}
+                  >
+                    Editar
+                  </button>
+                </div>
+                <div>
+                  <button
+                    className="btn btn-site"
+                    onClick={() => {
+                      console.log("DESATIVAR");
+                      chanceStatusTema(tema);
+                    }}
+                  >
+                    {tema.ativo ? "Desativar" : "Ativar"}
+                  </button>
+                </div>
               </div>
-              <p className="card-text mt-3">{tema.descricao}</p>
+            )}
+            <div className="d-flex align-items-center">
+              {window.location.pathname === "/temas" && (
+                <>
+                  <button
+                    className="btn btn-site"
+                    onClick={() => {
+                      candidatarTema(tema.id);
+                    }}
+                  >
+                    Candidatar-se
+                  </button>
+                  <div
+                    className="card-icons btn-icon-light ml-2"
+                    onClick={() => PrintTema.print(tema)}
+                    style={{ marginLeft: "10px" }}
+                  >
+                    <PrintIcon className="m-2" />
+                  </div>
+                </>
+              )}
+              {window.location.pathname === "/candidaturas" && (
+                <>
+                  <button
+                    className="btn btn-site"
+                    onClick={() => {
+                      removerCandidaturaTema(tema.id);
+                    }}
+                  >
+                    Cancelar candidatura
+                  </button>
+                </>
+              )}
             </div>
-          )}
-        </>
+            <hr className="separador" />
+            {!isOpen ? (
+              <p className="card-text">{Truncate(tema.descricao, 300)}</p>
+            ) : (
+              <p className="card-text">{tema.descricao}</p>
+            )}
+          </div>
+        </div>
       </div>
       {showModalCandidatos && (
         <ModalCandidatos

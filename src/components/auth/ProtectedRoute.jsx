@@ -1,11 +1,20 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { useEffect } from "react";
 
 const ProtectedRoute = ({ children }) => {
-  const { token } = useAuth();
+  const { token, setToken } = useAuth();
+  const localToken = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (localToken) {
+      setToken(localToken);
+    }
+  });
+
   const location = useLocation();
 
-  if (!token) {
+  if (!token && !localToken) {
     // user is not authenticated
     return <Navigate to="/" replace state={{ from: location }} />;
   }

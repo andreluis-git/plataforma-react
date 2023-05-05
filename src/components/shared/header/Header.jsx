@@ -5,12 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
 import { rxSetTemaEdicao } from "../../../redux/slices/editarTemaSlice";
-import { rxSetShowNovoTemaModal } from "../../../redux/slices/showNovoTemaModalSlice";
-import { useAuth } from "../../hooks/useAuth";
-import "./Header.css";
-import TemaService from "../../../services/TemaService";
 import { rxSetListaTemas } from "../../../redux/slices/listaTemasSlice";
+import { rxSetShowNovoTemaModal } from "../../../redux/slices/showNovoTemaModalSlice";
+import TemaService from "../../../services/TemaService";
+import { useAuth } from "../../hooks/useAuth";
 import NovoTemaModal from "../../temas/modais/NovoTemaModal";
+import "./Header.css";
 
 const Header = (props) => {
   const showNovoTemaModal = useSelector(
@@ -20,8 +20,6 @@ const Header = (props) => {
   const dispatch = useDispatch();
 
   const { onLogout } = useAuth();
-
-  // const { buscarTemasLista } = props;
 
   const buscarTemasLista = useCallback(
     (pagina) => {

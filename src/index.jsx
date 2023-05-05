@@ -11,12 +11,20 @@ import store from "./redux/store";
 
 //components
 import App from "./App";
+import { BrowserRouter as Router } from "react-router-dom";
+import { AuthProvider } from "./components/hooks/useAuth";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Router>
+        <AuthProvider>
+          <div className="container-fluid p-0 app-style">
+            <App />
+          </div>
+        </AuthProvider>
+      </Router>
     </Provider>
   </React.StrictMode>
 );

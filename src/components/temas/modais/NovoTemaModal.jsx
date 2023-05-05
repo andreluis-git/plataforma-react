@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
+import { rxSetListaTemas } from "../../../redux/slices/listaTemasSlice";
+import { rxSetShowModalConfirmacao } from "../../../redux/slices/showModalConfirmacaoSlice";
 import { rxSetShowNovoTemaModal } from "../../../redux/slices/showNovoTemaModalSlice";
 import DisciplinaService from "../../../services/DisciplinaService";
-import "./NovoTemaModal.css";
 import TemaService from "../../../services/TemaService";
-import { rxSetListaTemas } from "../../../redux/slices/listaTemasSlice";
+import "./NovoTemaModal.css";
 
 // ADICIONAR BOTÃO PARA DAR LIKE NOS TEMAS QUE GOSTA
 const NovoTemaModal = (props) => {
@@ -15,6 +16,7 @@ const NovoTemaModal = (props) => {
   const [disciplinasCadastradas, setDisciplinasCadastradas] =
     useState(undefined);
   const editarTema = useSelector((state) => state.editarTema.tema);
+
   const dispatch = useDispatch();
 
   const { register, handleSubmit, control, setValue } = useForm();
@@ -142,9 +144,10 @@ const NovoTemaModal = (props) => {
                     className="btn btn-outline-danger"
                     onClick={() => {
                       dispatch(rxSetShowNovoTemaModal(false));
+                      dispatch(rxSetShowModalConfirmacao(true));
                     }}
                   >
-                    Fechar
+                    Excluir
                   </button>
                 )}
                 <button type="submit" className="btn btn-site">

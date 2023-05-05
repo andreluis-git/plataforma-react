@@ -1,15 +1,12 @@
-.tema-header {
-  background-color: white;
+.instituicao-header {
+  background-color: var(--st-backgroundSecondary);
   height: 10vh;
   display: flex;
   align-items: center;
   border-bottom: 2px solid;
 }
-.page-body {
+
+.instituicao-body {
   min-height: calc(80vh);
   height: 100%;
-}
-
-label {
-  color: var(--st-fontePageHeader);
 }

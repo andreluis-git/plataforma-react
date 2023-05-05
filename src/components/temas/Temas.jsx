@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { rxSetTemaEdicao } from "../../redux/slices/editarTemaSlice";
 import { rxSetListaTemas } from "../../redux/slices/listaTemasSlice";
@@ -7,11 +7,17 @@ import TemaService from "../../services/TemaService";
 import Header from "../shared/header/Header";
 import PageHeader from "../shared/pageHeader/PageHeader";
 import "./Temas.css";
-import CollapsibleCard from "./collapsibleCardTema/CollapsibleCardTema";
-import NovoTemaModal from "./modais/NovoTemaModal";
+import CollapsibleCardTema from "./collapsibleCardTema/CollapsibleCardTema";
+import ModalConfirmacao from "../shared/modalConfirmacao/ModalConfirmacao";
 
 function Temas(props) {
   const temas = useSelector((state) => state.listaTemas.temas);
+
+  const [temaExclusao, setTemaExclusao] = useState();
+
+  const showModalConfirmacao = useSelector(
+    (state) => state.showModalConfirmacao.showModal
+  );
 
   const dispatch = useDispatch();
 
@@ -47,6 +53,19 @@ function Temas(props) {
     }
   };
 
+  const deletarTema = () => {
+    TemaService.deletarTema(temaExclusao.id)
+      .then(() => {
+        console.log("Tema deletado:: ", temaExclusao);
+        TemaService.buscarTemaPorPagina(
+          window.location.pathname.replace("/", "")
+        ).then((response) => {
+          dispatch(rxSetListaTemas(response));
+        });
+      })
+      .catch(() => console.log("Erro ao deletar tema:: ", temaExclusao));
+  };
+
   return (
     <>
       <Header />
@@ -56,7 +75,7 @@ function Temas(props) {
           buscarTemaPorTitulo={buscarTemaPorTitulo}
         />
       </div>
-      <div className="tema-body container mt-3">
+      <div className="tema-body container pt-3">
         <div className="d-flex justify-content-end">
           <button
             type="button"
@@ -71,9 +90,21 @@ function Temas(props) {
         </div>
         {temas &&
           temas.map((tema, idx) => (
-            <CollapsibleCard tema={tema} key={idx}></CollapsibleCard>
+            <CollapsibleCardTema
+              tema={tema}
+              key={idx}
+              hasCandidatos={tema.candidatosTema.length > 0 ? true : false}
+              setTemaExclusao={setTemaExclusao}
+            ></CollapsibleCardTema>
           ))}
       </div>
+      {showModalConfirmacao && (
+        <ModalConfirmacao
+          titulo="Excluir tema"
+          descricao="Deseja realmente excluir o tema selecionado?"
+          confirmar={deletarTema}
+        />
+      )}
     </>
   );
 }

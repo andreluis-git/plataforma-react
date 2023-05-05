@@ -1,12 +1,11 @@
 import React, { useRef, useState } from "react";
 import Truncate from "../../../utils/TruncateString";
 
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import FacebookIcon from "@mui/icons-material/Facebook";
 import EmailIcon from "@mui/icons-material/Email";
-import { Link } from "react-router-dom";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 import "./CollapsibleCardCandidatos.css";
 
@@ -32,11 +31,6 @@ const CollapsibleCardCandidatos = (props) => {
       "ENVIO Whats ",
       `https://wa.me/55${candidato.whatsapp.replace(/[^\w]/g, "")}`
     );
-    // const emailBody = `Olá ${candidato.nome}, tudo bem? \nEste e-mail é referente a sua participação no desenvolvimento do trabalho "${tema.titulo}", gostaria de saber se ainda possui interesse?\n\nAtenciosamente.`;
-
-    // const sendEmail = `mailto:${candidato.email}?subject=${
-    //   tema.titulo
-    // }&body=${encodeURIComponent(emailBody)}`;
 
     window.open(`https://wa.me/55${candidato.whatsapp.replace(/[^\w]/g, "")}`);
   };
@@ -46,15 +40,10 @@ const CollapsibleCardCandidatos = (props) => {
       "ENVIO Whats ",
       `https://wa.me/55${candidato.whatsapp.replace(/[^\w]/g, "")}`
     );
-    // const emailBody = `Olá ${candidato.nome}, tudo bem? \nEste e-mail é referente a sua participação no desenvolvimento do trabalho "${tema.titulo}", gostaria de saber se ainda possui interesse?\n\nAtenciosamente.`;
-
-    // const sendEmail = `mailto:${candidato.email}?subject=${
-    //   tema.titulo
-    // }&body=${encodeURIComponent(emailBody)}`;
 
     window.open(
       `https://www.instagram.com/${
-        candidato.instagram.charAt(0) == "@"
+        candidato.instagram.charAt(0) === "@"
           ? candidato.instagram.slice(1)
           : candidato.instagram
       }`

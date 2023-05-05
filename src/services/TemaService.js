@@ -6,11 +6,13 @@ import {
   BUSCAR_TEMAS_POR_TITULO,
   CADASTRAR_TEMA,
   CANDIDATAR_TEMA,
+  DELETAR_TEMA,
   EDITAR_TEMA,
   LISTAR_CANDIDATOS_TEMA,
   LISTAR_TEMAS,
   LISTAR_TEMAS_ANUNCIADOS,
   LISTAR_TEMAS_CANDIDATURAS,
+  REMOVER_CANDIDATURA_TEMA,
 } from "../utils/Constants";
 
 const listarTemas = () =>
@@ -154,6 +156,26 @@ const candidatarTema = (temaId) =>
       });
   });
 
+const removerCandidaturaTema = (temaId) =>
+  new Promise((resolve, reject) => {
+    api
+      .post(
+        REMOVER_CANDIDATURA_TEMA,
+        {},
+        {
+          params: { temaId },
+          headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+        }
+      )
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log("Erro candidatarTema :: ", error);
+        reject(error);
+      });
+  });
+
 const cadastrarTema = (tema) =>
   new Promise((resolve, reject) => {
     tema.disciplinasRelacionadas?.map(
@@ -181,9 +203,9 @@ const cadastrarTema = (tema) =>
 
 const editarTema = (tema) =>
   new Promise((resolve, reject) => {
-    tema.disciplinasRelacionadas?.map(
-      (disciplina) => (disciplina.id = disciplina.value)
-    );
+    tema.disciplinasRelacionadas?.map((disciplina) => {
+      if (disciplina.value) disciplina.id = disciplina.value;
+    });
 
     api
       .put(
@@ -195,6 +217,21 @@ const editarTema = (tema) =>
           headers: { Authorization: "Bearer " + localStorage.getItem("token") },
         }
       )
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log("Erro editarTema :: ", error);
+        reject(error);
+      });
+  });
+
+const deletarTema = (temaId) =>
+  new Promise((resolve, reject) => {
+    api
+      .delete(`${DELETAR_TEMA}/${temaId}`, {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      })
       .then((response) => {
         resolve(response.data);
       })
@@ -246,9 +283,11 @@ const TemaService = {
   buscarTemasAnunciadosPorTitulo,
   buscarTemasCandidaturasPorTitulo,
   candidatarTema,
+  removerCandidaturaTema,
   cadastrarTema,
   editarTema,
   buscarTemaPorPagina,
+  deletarTema,
 };
 
 export default TemaService;
