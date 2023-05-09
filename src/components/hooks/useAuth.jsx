@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
           let token = parseJwt(response.data);
           setToken(response.data);
           if (token.isInstituicao) {
-            navigate("/instHome");
+            navigate("/instCursos");
           } else {
             navigate("/temas");
           }

@@ -8,6 +8,7 @@ import PrintTema from "../../../utils/PrintTemaUtil";
 import Truncate from "../../../utils/TruncateString";
 import ModalCandidatos from "../modais/ModalCandidatos";
 import { rxSetListaTemas } from "../../../redux/slices/listaTemasSlice";
+import { toast } from "react-toastify";
 
 const CollapsibleCardTema = (props) => {
   const { tema, hasCandidatos, setTemaExclusao } = props;
@@ -66,8 +67,23 @@ const CollapsibleCardTema = (props) => {
     TemaService.editarTema(temaEditado)
       .then((response) => {
         buscarTemasLista();
+        toast.success("Tema editado com sucesso!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
       })
-      .catch();
+      .catch((error) => {
+        toast.success("Erro ao editar tema!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      });
   };
 
   return (

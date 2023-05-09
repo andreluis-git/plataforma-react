@@ -9,6 +9,7 @@ import PageHeader from "../shared/pageHeader/PageHeader";
 import "./Temas.css";
 import CollapsibleCardTema from "./collapsibleCardTema/CollapsibleCardTema";
 import ModalConfirmacao from "../shared/modalConfirmacao/ModalConfirmacao";
+import { toast } from "react-toastify";
 
 function Temas(props) {
   const temas = useSelector((state) => state.listaTemas.temas);
@@ -61,9 +62,25 @@ function Temas(props) {
           window.location.pathname.replace("/", "")
         ).then((response) => {
           dispatch(rxSetListaTemas(response));
+          toast.success("Tema deletado com sucesso!", {
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            position: toast.POSITION.TOP_RIGHT,
+          });
         });
       })
-      .catch(() => console.log("Erro ao deletar tema:: ", temaExclusao));
+      .catch((error) => {
+        toast.error("Erro ao deletar tema!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        console.log("Erro ao deletar tema:: ", temaExclusao);
+      });
   };
 
   return (

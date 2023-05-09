@@ -203,7 +203,7 @@ const cadastrarTema = (tema) =>
 
 const editarTema = (tema) =>
   new Promise((resolve, reject) => {
-    tema.disciplinasRelacionadas?.map((disciplina) => {
+    tema.disciplinasRelacionadas?.forEach((disciplina) => {
       if (disciplina.value) disciplina.id = disciplina.value;
     });
 

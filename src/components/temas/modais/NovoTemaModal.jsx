@@ -9,6 +9,7 @@ import { rxSetShowNovoTemaModal } from "../../../redux/slices/showNovoTemaModalS
 import DisciplinaService from "../../../services/DisciplinaService";
 import TemaService from "../../../services/TemaService";
 import "./NovoTemaModal.css";
+import { toast } from "react-toastify";
 
 // ADICIONAR BOTÃO PARA DAR LIKE NOS TEMAS QUE GOSTA
 const NovoTemaModal = (props) => {
@@ -54,12 +55,30 @@ const NovoTemaModal = (props) => {
 
   const onSubmit = (event) => {
     if (!editarTema) {
+      event.disciplinasRelacionadas = event.disciplinasRelacionadas
+        ? event.disciplinasRelacionadas
+        : [];
       TemaService.cadastrarTema(event)
         .then((response) => {
           dispatch(rxSetShowNovoTemaModal(false));
           buscarTemasLista(window.location.pathname.replace("/", ""));
+          toast.success("Tema cadastrado com sucesso!", {
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            position: toast.POSITION.TOP_RIGHT,
+          });
         })
-        .catch();
+        .catch((error) => {
+          toast.error("Erro ao cadastrar tema!", {
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        });
     } else {
       let temaEditado = { ...editarTema };
       Object.keys(event).map((key) => (temaEditado[key] = event[key]));
@@ -67,8 +86,23 @@ const NovoTemaModal = (props) => {
         .then((response) => {
           dispatch(rxSetShowNovoTemaModal(false));
           buscarTemasLista(window.location.pathname.replace("/", ""));
+          toast.success("Tema editado com sucesso!", {
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            position: toast.POSITION.TOP_RIGHT,
+          });
         })
-        .catch();
+        .catch((error) => {
+          toast.error("Erro ao editar tema!", {
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        });
     }
   };
 
@@ -109,6 +143,7 @@ const NovoTemaModal = (props) => {
                     className="form-control"
                     {...register("titulo")}
                     defaultValue={editarTema ? editarTema.titulo : ""}
+                    placeholder="Digite um título para o tema"
                   />
                 </div>
                 <div className="form-group mb-2">
@@ -118,6 +153,7 @@ const NovoTemaModal = (props) => {
                     defaultValue={editarTema ? editarTema.descricao : ""}
                     {...register("descricao")}
                     rows="10"
+                    placeholder="Digite uma descrição para o tema"
                   />
                 </div>
                 <label>Temas Interesse</label>

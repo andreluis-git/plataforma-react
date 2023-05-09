@@ -14,6 +14,9 @@ import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from "./components/hooks/useAuth";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -22,6 +25,7 @@ root.render(
         <AuthProvider>
           <div className="container-fluid p-0 app-style">
             <App />
+            <ToastContainer />
           </div>
         </AuthProvider>
       </Router>

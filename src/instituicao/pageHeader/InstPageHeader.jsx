@@ -3,10 +3,12 @@ import React from "react";
 import "./InstPageHeader.css";
 
 const InstPageHeader = (props) => {
-  const { pagina } = props;
+  const { pagina, pesquisar } = props;
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    let texto = document.getElementById("buscarTitulo").value;
+    pesquisar(texto);
   };
 
   return (
@@ -16,23 +18,31 @@ const InstPageHeader = (props) => {
           <div className="col-6">
             <span className="titulo-pagina fw-bold">{pagina}</span>
           </div>
-          <div className="col-6 d-flex align-items-center">
-            <form onSubmit={handleSubmit} className="w-100">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Digite o tema ou assunto de interesse"
-                  id="buscarTitulo"
-                />
-                <div className="input-group-append">
-                  <button className="btn btn-icon" type="submit">
-                    <SearchIcon />
-                  </button>
+          {(pagina === "Cursos" || pagina === "Alunos") && (
+            <div className="col-6 d-flex align-items-center">
+              <form
+                onChange={handleSubmit}
+                onSubmit={handleSubmit}
+                className="w-100"
+              >
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder={`Digite o ${
+                      pagina === "Alunos" ? "email do aluno" : "nome do curso"
+                    }`}
+                    id="buscarTitulo"
+                  />
+                  <div className="input-group-append">
+                    <button className="btn btn-icon" type="submit">
+                      <SearchIcon />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </form>
-          </div>
+              </form>
+            </div>
+          )}
         </div>
       </div>
     </>

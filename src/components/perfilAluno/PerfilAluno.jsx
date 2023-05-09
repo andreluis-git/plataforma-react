@@ -6,9 +6,11 @@ import DisciplinaService from "../../services/DisciplinaService";
 import Header from "../shared/header/Header";
 import PageHeader from "../shared/pageHeader/PageHeader";
 
-import "./Perfil.css";
+import "./PerfilAluno.css";
 
-const Perfil = (props) => {
+import { toast } from "react-toastify";
+
+const PerfilAluno = (props) => {
   const { register, handleSubmit, control, setValue } = useForm();
   const [aluno, setAluno] = useState();
   const [disciplinasInteresse, setDisciplinasInteresse] = useState([]);
@@ -48,16 +50,35 @@ const Perfil = (props) => {
 
         setDisciplinasInteresse(options);
       })
-      .catch((error) =>
-        console.log("NovoTemaModal.js listarDisciplinasPorCurso ", error)
-      );
+      .catch((error) => {
+        console.log("NovoTemaModal.js listarDisciplinasPorCurso ", error);
+      });
   }, [setValue]);
 
   const onSubmit = (event) => {
     // console.log(JSON.stringify(event));
     let alunoEditado = { ...aluno };
     Object.keys(event).map((key) => (alunoEditado[key] = event[key]));
-    AlunoService.editarAluno(alunoEditado).then().catch();
+    AlunoService.editarAluno(alunoEditado)
+      .then((response) => {
+        toast.success("Perfil editado com sucesso!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      })
+      .catch((error) => {
+        toast.error("Erro ao editar perfil!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        console.log("PerfilAluno erro");
+      });
   };
 
   return (
@@ -94,6 +115,7 @@ const Perfil = (props) => {
                 rows="5"
                 maxLength={2000}
                 onChange={(e) => setContadorLetrasSobre(e.target.value.length)}
+                placeholder="Digite uma descrição sobre você"
               />
               <div className="d-flex justify-content-end">
                 <label>{contadorLetrasSobre}/2000</label>
@@ -101,19 +123,35 @@ const Perfil = (props) => {
             </div>
             <div className="form-group mb-2">
               <label>Whatsapp</label>
-              <input className="form-control" {...register("whatsapp")} />
+              <input
+                className="form-control"
+                {...register("whatsapp")}
+                placeholder="Digite seu número de Whatsapp com DDD"
+              />
             </div>
             <div className="form-group mb-2">
               <label>Facebook</label>
-              <input className="form-control" {...register("facebook")} />
+              <input
+                className="form-control"
+                {...register("facebook")}
+                placeholder="Digite o nome do seu perfil do Facebook"
+              />
             </div>
             <div className="form-group mb-2">
               <label>Linkedin</label>
-              <input className="form-control" {...register("linkedin")} />
+              <input
+                className="form-control"
+                {...register("linkedin")}
+                placeholder="Digite o nome do seu perfil no Linkedin"
+              />
             </div>
             <div className="form-group mb-2">
               <label>Instagram</label>
-              <input className="form-control" {...register("instagram")} />
+              <input
+                className="form-control"
+                {...register("instagram")}
+                placeholder="Digite o nome do seu perfil no Instagram"
+              />
             </div>
             <label>Temas Interesse</label>
             <Controller
@@ -148,4 +186,4 @@ const Perfil = (props) => {
   );
 };
 
-export default Perfil;
+export default PerfilAluno;

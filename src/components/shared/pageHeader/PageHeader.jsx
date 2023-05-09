@@ -1,10 +1,10 @@
-import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
+import React from "react";
 import "./PageHeader.css";
 
 const PageHeader = (props) => {
   const { pagina, buscarTemaPorTitulo } = props;
-  const [focusOrdenacaoItem, setFocusOrdenacaoItem] = useState(0);
+  // const [focusOrdenacaoItem, setFocusOrdenacaoItem] = useState(0);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -19,7 +19,7 @@ const PageHeader = (props) => {
         <div className="row">
           <div className="col-6">
             <span className="titulo-pagina fw-bold">{pagina}</span>
-            {pagina.toLowerCase() === "temas" && (
+            {/* {pagina.toLowerCase() === "temas" && (
               <div className="pb-3 pt-2">
                 <button
                   className={`classificacao-temas${
@@ -38,7 +38,7 @@ const PageHeader = (props) => {
                   Rescentes
                 </button>
               </div>
-            )}
+            )} */}
           </div>
           <div className="col-6 d-flex align-items-center">
             {pagina.toLowerCase() !== "perfil" && (

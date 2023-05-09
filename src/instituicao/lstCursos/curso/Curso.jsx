@@ -15,6 +15,8 @@ import ModalConfirmacao from "../../../components/shared/modalConfirmacao/ModalC
 import { rxSetShowModalConfirmacao } from "../../../redux/slices/showModalConfirmacaoSlice";
 import CursoService from "../../../services/CursoService";
 import { rxSetCursoEdicao } from "../../../redux/slices/editarCursoSlice";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Curso = () => {
   const [disciplinas, setDisciplinas] = useState();
@@ -35,14 +37,18 @@ const Curso = () => {
   );
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { register, handleSubmit, control, setValue } = useForm();
+  const { register, handleSubmit } = useForm();
 
   useEffect(() => {
-    buscarDisciplinas(idTemaEdicao);
-  }, [showModalDisciplina]);
+    if (curso) {
+      buscarDisciplinas(idTemaEdicao);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const buscarDisciplinas = (id) => {
+  const buscarDisciplinas = (id = idTemaEdicao) => {
     DisciplinaService.listarDisciplinasPorCursoId(id)
       .then((response) => {
         setDisciplinas(response);
@@ -58,25 +64,65 @@ const Curso = () => {
         setDisciplinas(response);
       })
       .catch((ex) => console.log("ERRO AO BUSCAR DISCIPLINA POR NOME"));
-    console.log(document.getElementById("buscarNome").value);
+    console.log(
+      "buscarDisciplinaPorNome",
+      document.getElementById("buscarNome").value
+    );
   };
 
   const editarCurso = (event) => {
     if (!curso) {
-      // TemaService.cadastrarTema(event)
-      //   .then((response) => {
-      //     dispatch(rxSetShowNovoTemaModal(false));
-      //     buscarTemasLista(window.location.pathname.replace("/", ""));
-      //   })
-      //   .catch();
+      console.log(event);
+      CursoService.cadastrarCurso(event)
+        .then((response) => {
+          dispatch(rxSetCursoEdicao(response));
+          navigate(
+            `/${window.location.pathname.split("/")[1]}/editarCurso/` +
+              response.id
+          );
+          toast.success("Curso cadastrado com sucesso!", {
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        })
+        .catch((error) => {
+          toast.error("Erro ao cadastrar curso!", {
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          console.log("Erro ao cadastrar curso curso.jsx");
+        });
     } else {
       let cursoEditado = { ...curso };
       Object.keys(event).map((key) => (cursoEditado[key] = event[key]));
       CursoService.editarCurso(cursoEditado)
         .then((response) => {
           dispatch(rxSetCursoEdicao(cursoEditado));
+          buscarDisciplinas(idTemaEdicao);
+          toast.success("Curso editado com sucesso!", {
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            position: toast.POSITION.TOP_RIGHT,
+          });
         })
-        .catch((error) => "Erro ao editar curso curso.jsx");
+        .catch((error) => {
+          toast.error("Erro ao editar curso!", {
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          console.log("Erro ao editar curso curso.jsx");
+        });
     }
   };
 
@@ -85,8 +131,24 @@ const Curso = () => {
     DisciplinaService.deletarDisciplina(disciplinaDeletar.id)
       .then((response) => {
         buscarDisciplinas(idTemaEdicao);
+        toast.success("Disciplina deletada com sucesso!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
       })
-      .catch((error) => console.log("ERRO AO DELETAR DISCIPLINA CURSO.JSX"));
+      .catch((error) => {
+        toast.error("Erro ao deletar disciplina!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        console.log("ERRO AO DELETAR DISCIPLINA CURSO.JSX");
+      });
   };
 
   return (
@@ -104,19 +166,21 @@ const Curso = () => {
       <div className="instituicao-body container pt-3">
         <form onSubmit={handleSubmit(editarCurso)}>
           <div className="form-group mb-2">
-            <label>Nome</label>
+            <label>Nome*</label>
             <input
               className="form-control"
               {...register("nome")}
               defaultValue={curso ? curso.nome : ""}
+              placeholder="Digite o nome do curso"
             />
           </div>
           <div className="form-group mb-2">
-            <label>Sigla</label>
+            <label>Sigla*</label>
             <input
               className="form-control"
               {...register("sigla")}
               defaultValue={curso ? curso.sigla : ""}
+              placeholder="Digite a sigla do curso"
             />
           </div>
           <div className="d-flex justify-content-end mb-2">
@@ -125,80 +189,84 @@ const Curso = () => {
             </button>
           </div>
         </form>
-        <label>Disciplinas curso</label>
-
-        <form
-          onChange={buscarDisciplinaPorNome}
-          onSubmit={buscarDisciplinaPorNome}
-          className="w-100 mb-2 d-flex justify-content-between"
-        >
-          <div className="input-group" style={{ width: "70%" }}>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Digite o nome da disciplina"
-              id="buscarNome"
-            />
-            <div className="input-group-append">
-              <button className="btn btn-icon" type="submit">
-                <SearchIcon />
+        {curso && (
+          <>
+            <label>Disciplinas curso</label>
+            <div className="d-flex justify-content-between">
+              <form
+                onChange={buscarDisciplinaPorNome}
+                onSubmit={buscarDisciplinaPorNome}
+                style={{ width: "70%" }}
+              >
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Digite o nome da disciplina"
+                    id="buscarNome"
+                  />
+                  <div className="input-group-append">
+                    <button className="btn btn-icon" type="submit">
+                      <SearchIcon />
+                    </button>
+                  </div>
+                </div>
+                <div className="d-flex justify-content-end"></div>
+              </form>
+              <button
+                className="btn btn-site"
+                onClick={() => {
+                  dispatch(rxSetShowDisciplinaModal(true));
+                }}
+              >
+                Nova disciplina
               </button>
             </div>
-          </div>
-          <div className="d-flex justify-content-end">
-            <button
-              className="btn btn-site"
-              onClick={() => {
-                dispatch(rxSetDisciplinaEdicao(null));
-                dispatch(rxSetShowDisciplinaModal(true));
-              }}
-            >
-              Nova disciplina
-            </button>
-          </div>
-        </form>
-        <ul className="list-group">
-          {disciplinas &&
-            disciplinas.map((disciplina, idx) => (
-              <li
-                className="list-group-item d-flex justify-content-between align-items-center"
-                key={idx}
-              >
-                <span>{disciplina.nome}</span>
-                <div>
-                  <button
-                    className="btn btn-site m-2 mt-0 mb-0"
-                    onClick={() => {
-                      dispatch(rxSetDisciplinaEdicao(disciplina));
-                      dispatch(rxSetShowDisciplinaModal(true));
-                    }}
+            <ul className="list-group lst-group-curso mt-3">
+              {disciplinas &&
+                disciplinas.map((disciplina, idx) => (
+                  <li
+                    className="list-group-item d-flex justify-content-between align-items-center"
+                    key={idx}
                   >
-                    Editar
-                  </button>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => {
-                      setDisciplinaDeletar(disciplina);
-                      dispatch(rxSetShowModalConfirmacao(true));
-                    }}
-                  >
-                    Deletar
-                  </button>
-                </div>
-              </li>
-            ))}
-        </ul>
+                    <span>{disciplina.nome}</span>
+                    <div>
+                      <button
+                        className="btn btn-site m-2 mt-0 mb-0"
+                        onClick={() => {
+                          dispatch(rxSetDisciplinaEdicao(disciplina));
+                          dispatch(rxSetShowDisciplinaModal(true));
+                        }}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => {
+                          setDisciplinaDeletar(disciplina);
+                          dispatch(rxSetShowModalConfirmacao(true));
+                        }}
+                      >
+                        Deletar
+                      </button>
+                    </div>
+                  </li>
+                ))}
+            </ul>
+          </>
+        )}
       </div>
       {showModalDisciplina && (
         <InstDisciplinaModal
           curso={curso}
+          buscarDisciplinas={buscarDisciplinas}
           setDisciplinaDeletar={setDisciplinaDeletar}
         />
       )}
       {showModalConfirmacao && (
         <ModalConfirmacao
           titulo="Excluir disciplina"
-          descricao="Deseja realmente excluir a disciplina selecionado?"
+          descricao="Deseja realmente excluir a disciplina selecionada?"
           confirmar={deletarDisciplina}
         />
       )}

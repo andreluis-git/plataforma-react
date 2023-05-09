@@ -36,11 +36,6 @@ const CollapsibleCardCandidatos = (props) => {
   };
 
   const abrirInstagram = () => {
-    console.log(
-      "ENVIO Whats ",
-      `https://wa.me/55${candidato.whatsapp.replace(/[^\w]/g, "")}`
-    );
-
     window.open(
       `https://www.instagram.com/${
         candidato.instagram.charAt(0) === "@"
@@ -48,6 +43,14 @@ const CollapsibleCardCandidatos = (props) => {
           : candidato.instagram
       }`
     );
+  };
+
+  const abrirLinkedin = () => {
+    window.open(`https://www.linkedin.com/in/${candidato.linkedin}`);
+  };
+
+  const abrirFacebook = () => {
+    window.open(`https://www.facebook.com/${candidato.facebook}/`);
   };
 
   return (
@@ -70,7 +73,10 @@ const CollapsibleCardCandidatos = (props) => {
               </div>
             )}
             {candidato.linkedin && (
-              <div className="btn-icon-candidatos btn-icon-light d-flex justify-content-center align-items-center cursor-pointer">
+              <div
+                className="btn-icon-candidatos btn-icon-light d-flex justify-content-center align-items-center cursor-pointer"
+                onClick={abrirLinkedin}
+              >
                 <LinkedInIcon />
               </div>
             )}
@@ -83,7 +89,10 @@ const CollapsibleCardCandidatos = (props) => {
               </div>
             )}
             {candidato.facebook && (
-              <div className="btn-icon-candidatos btn-icon-light d-flex justify-content-center align-items-center cursor-pointer">
+              <div
+                className="btn-icon-candidatos btn-icon-light d-flex justify-content-center align-items-center cursor-pointer"
+                onClick={abrirFacebook}
+              >
                 <FacebookIcon />
               </div>
             )}

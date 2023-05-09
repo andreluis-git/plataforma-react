@@ -1,20 +1,12 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
+import React from "react";
+import { useDispatch } from "react-redux";
 import { rxSetShowModalConfirmacao } from "../../../redux/slices/showModalConfirmacaoSlice";
 
 const ModalConfirmacao = (props) => {
-  const modalConfirmacao = useSelector(
-    (state) => state.showModalConfirmacao.showModal
-  );
-
-  const { titulo, descricao, confirmar, setTemaExclusao } = props;
+  const { titulo, descricao, confirmar } = props;
 
   const dispatch = useDispatch();
-
-  const onSubmit = (event) => {
-    console.log(event);
-  };
 
   return (
     <>

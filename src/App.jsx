@@ -4,7 +4,8 @@ import "./App.css";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Home from "./components/home/Home";
 import Login from "./components/login/Login";
-import Perfil from "./components/perfil/Perfil";
+import PerfilAluno from "./components/perfilAluno/PerfilAluno";
+import PerfilInstituicao from "./components/perfilInstituicao/PerfilInstituicao";
 import Temas from "./components/temas/Temas";
 import InstHome from "./instituicao/home/InstHome";
 import InstCursos from "./instituicao/lstCursos/InstCursos";
@@ -96,10 +97,19 @@ function App() {
       />
       <Route
         exact
-        path="/perfil"
+        path="/perfilAluno"
         element={
           <ProtectedRoute>
-            <Perfil />
+            <PerfilAluno />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        exact
+        path="/perfilInstituicao"
+        element={
+          <ProtectedRoute>
+            <PerfilInstituicao />
           </ProtectedRoute>
         }
       />

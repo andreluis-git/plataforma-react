@@ -1,9 +1,8 @@
-import React from "react";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../hooks/useAuth";
 import "./Login.css";
-import { Link } from "react-router-dom";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -42,7 +41,7 @@ const Login = () => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Nome"
+                  placeholder="E-mail"
                   {...register("email")}
                   required
                   autoFocus
@@ -74,7 +73,7 @@ const Login = () => {
                 </button>
               </div>
             </form>
-            <Link>Esqueceu a senha?</Link>
+            {/* <Link>Esqueceu a senha?</Link> */}
           </div>
         </div>
       </div>

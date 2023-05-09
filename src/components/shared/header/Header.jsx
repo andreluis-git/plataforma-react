@@ -98,10 +98,10 @@ const Header = (props) => {
                 />
               </div>
               <div className={"custom-dropdown-content"}>
-                <Link to="/perfil" style={{ textDecoration: "none" }}>
+                <Link to="/perfilAluno" style={{ textDecoration: "none" }}>
                   Perfil
                 </Link>
-                <Link onClick={onLogout}>Logout</Link>
+                <Link onClick={onLogout}>Sair</Link>
               </div>
             </div>
           </div>
