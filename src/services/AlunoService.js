@@ -3,6 +3,7 @@ import {
   BUSCAR_ALUNOS_POR_INSTITUICAO_ID,
   BUSCAR_ALUNOS_POR_INSTITUICAO_ID_AND_EMAIL,
   EDITAR_ALUNO,
+  EDITAR_ALUNO_INSTITUICAO,
 } from "../utils/Constants";
 import api from "./Api";
 
@@ -77,11 +78,33 @@ const editarAluno = (aluno) =>
       });
   });
 
+const editarAlunoInstituicao = (aluno) =>
+  new Promise((resolve, reject) => {
+    api
+      .put(
+        EDITAR_ALUNO_INSTITUICAO,
+        {
+          ...aluno,
+        },
+        {
+          headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+        }
+      )
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log("Erro editarAluno :: ", error);
+        reject(error);
+      });
+  });
+
 const AlunoService = {
   buscarAluno,
   buscarAlunosPorInstituicaoId,
   buscarAlunosPorInstituicaoIdAndEmail,
   editarAluno,
+  editarAlunoInstituicao,
 };
 
 export default AlunoService;

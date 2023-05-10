@@ -6,6 +6,7 @@ import showDisciplinaModalslice from "./slices/showDisciplinaModalslice";
 import showModalConfirmacaoSlice from "./slices/showModalConfirmacaoSlice";
 import showNovoTemaModalSlice from "./slices/showNovoTemaModalSlice";
 import editarCursoSlice from "./slices/editarCursoSlice";
+import editarAlunoInstituicaoSlice from "./slices/editarAlunoInstituicaoSlice";
 
 export default configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export default configureStore({
     showDisciplinaModal: showDisciplinaModalslice,
     editarDisciplina: editarDisciplinaSlice,
     editarCurso: editarCursoSlice,
+    editarAlunoInstituicao: editarAlunoInstituicaoSlice,
   },
 });

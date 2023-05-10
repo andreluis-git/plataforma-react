@@ -4,6 +4,9 @@ import InstNavBar from "../navBar/InstNavBar";
 import InstPageHeader from "../pageHeader/InstPageHeader";
 
 import "./InstAlunos.css";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { rxSetEditarAlunoInstituicao } from "../../redux/slices/editarAlunoInstituicaoSlice";
 
 const InstAlunos = () => {
   const [alunos, setAlunos] = useState();
@@ -11,6 +14,9 @@ const InstAlunos = () => {
   useEffect(() => {
     buscarAlunosPorInstituicaoId();
   }, []);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const buscarAlunosPorInstituicaoId = () => {
     AlunoService.buscarAlunosPorInstituicaoId()
@@ -55,7 +61,12 @@ const InstAlunos = () => {
                 <div>
                   <button
                     className="btn btn-site m-2 mt-0 mb-0"
-                    onClick={() => {}}
+                    onClick={() => {
+                      dispatch(rxSetEditarAlunoInstituicao(aluno));
+                      navigate(
+                        `${window.location.pathname}/alterarAluno/${aluno.id}`
+                      );
+                    }}
                   >
                     Editar
                   </button>

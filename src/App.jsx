@@ -11,6 +11,7 @@ import InstHome from "./instituicao/home/InstHome";
 import InstCursos from "./instituicao/lstCursos/InstCursos";
 import InstAlunos from "./instituicao/alunos/InstAlunos";
 import Curso from "./instituicao/lstCursos/curso/Curso";
+import AlterarAluno from "./instituicao/alunos/alterarAluno/AlterarAluno";
 
 function App() {
   return (
@@ -40,6 +41,15 @@ function App() {
         element={
           <ProtectedRoute>
             <InstAlunos />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        exact
+        path="/instAlunos/alterarAluno/:id"
+        element={
+          <ProtectedRoute>
+            <AlterarAluno />
           </ProtectedRoute>
         }
       />

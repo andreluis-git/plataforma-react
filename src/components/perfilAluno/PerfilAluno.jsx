@@ -92,10 +92,10 @@ const PerfilAluno = (props) => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group mb-2">
               <label>Nome Completo</label>
-              <input className="form-control" {...register("nome")} disabled />
+              <input className="form-control" {...register("nome")} />
             </div>
             <div className="form-group mb-2">
-              <label>Email *</label>
+              <label>E-mail *</label>
               <input className="form-control" {...register("email")} disabled />
             </div>
             <div className="form-group mb-2">
