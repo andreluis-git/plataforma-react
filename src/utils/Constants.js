@@ -24,12 +24,14 @@ export const CADASTRAR_DISCIPLINA = "/disciplina/cadastrarDisciplina";
 export const DELETAR_DISCIPLINA = "/disciplina/deletarDisciplina";
 
 export const BUSCAR_ALUNO = "/aluno/buscarAluno";
+export const BUSCAR_ALUNO_POR_ID = "/aluno/buscarAluno";
 export const BUSCAR_ALUNOS_POR_INSTITUICAO_ID =
   "/aluno/buscarAlunosPorInstituicaoId";
 export const BUSCAR_ALUNOS_POR_INSTITUICAO_ID_AND_EMAIL =
   "/aluno/buscarAlunosPorInstituicaoIdAndEmail";
 export const EDITAR_ALUNO = "/aluno/editarAluno";
 export const EDITAR_ALUNO_INSTITUICAO = "/aluno/editarAlunoInstituicao";
+export const CADASTRAR_ALUNO = "/aluno/cadastrarAluno";
 
 export const LISTAR_CURSOS_POR_INSTITUICAO =
   "/curso/listarCursosPorInstituicao";

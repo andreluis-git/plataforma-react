@@ -1,88 +1,113 @@
-import React, { useEffect, useState } from "react";
-import InstNavBar from "../../navBar/InstNavBar";
-import PageHeader from "../../../components/shared/pageHeader/PageHeader";
-import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import AlunoService from "../../../services/AlunoService";
-import { toast } from "react-toastify";
+import React, { useCallback, useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
+import { toast } from "react-toastify";
+import PageHeader from "../../../components/shared/pageHeader/PageHeader";
+import AlunoService from "../../../services/AlunoService";
 import CursoService from "../../../services/CursoService";
+import InstNavBar from "../../navBar/InstNavBar";
 
 const AlterarAluno = (props) => {
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit, control, setValue } = useForm();
 
-  const aluno = useSelector((state) => state.editarAlunoInstituicao.aluno);
+  const [aluno, setAluno] = useState();
   const [cursosOptions, setCursosOptions] = useState();
   const [cursoSelected, setCursoSelected] = useState();
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    listarCursosPorInstituicao();
-    console.log();
-  }, []);
-
-  const listarCursosPorInstituicao = () => {
+  const buscarCursosInstituicao = useCallback(() => {
     CursoService.listarCursosPorInstituicao()
       .then((response) => {
         let cursos = [];
         response.forEach((curso) => {
-          cursos.push({ value: curso.id, nome: curso.nome });
+          cursos.push({ value: curso.id, label: curso.nome });
 
-          if (curso.id === aluno.cursoAluno.id) {
-            setCursoSelected({ value: curso.id, nome: curso.nome });
+          if (curso.id === aluno?.cursoAluno.id) {
+            setCursoSelected({ value: curso.id, label: curso.nome });
+            setValue("cursoAluno", { value: curso.id, label: curso.nome });
           }
-          setCursosOptions(cursos);
         });
+        setCursosOptions(cursos);
       })
       .catch((error) => console.log("Erro ao listar curso InstCursos.jsx"));
-  };
-
-  const onSubmit = (event) => {
-    let alunoEditado = { ...aluno };
-    event.cursoAluno = {
-      id: event.cursoAluno.value ? event.cursoAluno.value : event.cursoAluno,
-    };
-    Object.keys(event).map((key) => (alunoEditado[key] = event[key]));
-    AlunoService.editarAlunoInstituicao(alunoEditado)
-      .then((response) => {
-        toast.success("Aluno alterado com sucesso!", {
-          autoClose: 2000,
-          closeOnClick: true,
-          pauseOnFocusLoss: false,
-          pauseOnHover: false,
-          position: toast.POSITION.TOP_RIGHT,
-        });
-        navigate("/instAlunos");
-      })
-      .catch((error) => {
-        toast.error("Erro ao editar aluno!", {
-          autoClose: 2000,
-          closeOnClick: true,
-          pauseOnFocusLoss: false,
-          pauseOnHover: false,
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      });
-    console.log(alunoEditado);
-  };
-
-  // const cursos = [
-  //   { value: 3, nome: "ADM" },
-  //   { value: 2, nome: "LOG" },
-  //   { value: 1, nome: "ADS" },
-  //   { value: 4, nome: "COMEX" },
-  // ];
+  }, [aluno, setValue]);
 
   useEffect(() => {
-    console.log(aluno);
-    setValue("nome", aluno.nome);
-    setValue("cursoAluno", {
-      value: aluno.cursoAluno.id,
-      nome: aluno.cursoAluno.nome,
-    });
-    setValue("email", aluno.email);
-  }, [aluno, setValue]);
+    if (aluno) {
+      buscarCursosInstituicao();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [aluno]);
+
+  useEffect(() => {
+    if (window.location.pathname.includes("alterarAluno")) {
+      AlunoService.buscarAlunoPorId(window.location.pathname.split("/").pop())
+        .then((response) => {
+          setAluno(response);
+          setValue("nome", response.nome);
+          setValue("email", response.email);
+        })
+        .catch((error) => console.log("Erro ao buscar aluno por id"));
+    } else {
+      buscarCursosInstituicao();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onSubmit = (event) => {
+    if (window.location.pathname.includes("alterarAluno")) {
+      let alunoEditado = { ...aluno };
+      event.cursoAluno = {
+        id: event.cursoAluno.value,
+      };
+      Object.keys(event).map((key) => (alunoEditado[key] = event[key]));
+      AlunoService.editarAlunoInstituicao(alunoEditado)
+        .then((response) => {
+          toast.success("Aluno alterado com sucesso!", {
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          navigate("/instAlunos");
+        })
+        .catch((error) => {
+          toast.error("Erro ao editar aluno!", {
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        });
+    } else {
+      console.log("CADASTRO", event);
+      event.cursoAluno = { id: event.cursoAluno.value };
+      AlunoService.cadastrarAluno(event)
+        .then((response) => {
+          toast.success("Aluno cadastrado com sucesso!", {
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          navigate("/instAlunos");
+        })
+        .catch((error) => {
+          toast.error("Erro ao cadastrar aluno!", {
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        });
+    }
+  };
 
   return (
     <>
@@ -99,7 +124,9 @@ const AlterarAluno = (props) => {
               placeholder="Digite o nome do aluno"
               {...register("nome")}
               defaultValue={aluno ? aluno.nome : ""}
-              disabled
+              disabled={
+                window.location.pathname.includes("alterarAluno") ? true : false
+              }
             />
           </div>
           <div className="form-group mb-2">
@@ -111,19 +138,23 @@ const AlterarAluno = (props) => {
               placeholder="Digite o e-mail do aluno"
             />
           </div>
-          <label>Curso aluno</label>
-          <select
-            className="form-control"
-            {...register("cursoAluno")}
-            defaultValue={cursoSelected}
-          >
-            {cursosOptions &&
-              cursosOptions.map((curso, idx) => (
-                <option value={curso.value} key={idx}>
-                  {curso.nome}
-                </option>
-              ))}
-          </select>
+          {cursosOptions && <label>Curso aluno</label>}
+          {cursosOptions && (
+            <Controller
+              name="cursoAluno"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  options={cursosOptions}
+                  closeMenuOnSelect={true}
+                  hideSelectedOptions={true}
+                  allowSelectAll={true}
+                  {...field}
+                  value={field.value || cursoSelected}
+                />
+              )}
+            />
+          )}
           <div className="d-flex justify-content-end">
             <button
               type="submit"

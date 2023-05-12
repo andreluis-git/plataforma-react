@@ -53,7 +53,15 @@ function App() {
           </ProtectedRoute>
         }
       />
-
+      <Route
+        exact
+        path="/instAlunos/novoAluno"
+        element={
+          <ProtectedRoute>
+            <AlterarAluno />
+          </ProtectedRoute>
+        }
+      />
       <Route
         exact
         path="/instCursos/novoCurso"

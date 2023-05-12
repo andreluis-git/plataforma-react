@@ -67,7 +67,7 @@ const PerfilInstituicao = (props) => {
               />
             </div>
             <div className="form-group mb-2">
-              <label>Email*</label>
+              <label>E-mail*</label>
               <input className="form-control" {...register("email")} disabled />
             </div>
             <hr

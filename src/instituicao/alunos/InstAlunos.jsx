@@ -3,10 +3,8 @@ import AlunoService from "../../services/AlunoService";
 import InstNavBar from "../navBar/InstNavBar";
 import InstPageHeader from "../pageHeader/InstPageHeader";
 
-import "./InstAlunos.css";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { rxSetEditarAlunoInstituicao } from "../../redux/slices/editarAlunoInstituicaoSlice";
+import "./InstAlunos.css";
 
 const InstAlunos = () => {
   const [alunos, setAlunos] = useState();
@@ -15,7 +13,6 @@ const InstAlunos = () => {
     buscarAlunosPorInstituicaoId();
   }, []);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const buscarAlunosPorInstituicaoId = () => {
@@ -47,7 +44,14 @@ const InstAlunos = () => {
       </div>
       <div className="instituicao-body container pt-3">
         <div className="d-flex justify-content-end mb-3">
-          <button className="btn btn-site">Cadastrar aluno</button>
+          <button
+            className="btn btn-site"
+            onClick={() => {
+              navigate(window.location.pathname + "/novoAluno");
+            }}
+          >
+            Cadastrar aluno
+          </button>
         </div>
         <ul className="list-group lst-group-alunos">
           {alunos &&
@@ -62,7 +66,6 @@ const InstAlunos = () => {
                   <button
                     className="btn btn-site m-2 mt-0 mb-0"
                     onClick={() => {
-                      dispatch(rxSetEditarAlunoInstituicao(aluno));
                       navigate(
                         `${window.location.pathname}/alterarAluno/${aluno.id}`
                       );
