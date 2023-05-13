@@ -12,10 +12,41 @@ import InstCursos from "./instituicao/lstCursos/InstCursos";
 import InstAlunos from "./instituicao/alunos/InstAlunos";
 import Curso from "./instituicao/lstCursos/curso/Curso";
 import AlterarAluno from "./instituicao/alunos/alterarAluno/AlterarAluno";
+import LstInstituicoes from "./admin/lstInstituicao/LstInstituicoes";
+import Instituicao from "./admin/lstInstituicao/instituicao/Instituicao";
 
 function App() {
   return (
     <Routes>
+      {/* ROTAS ADM */}
+      <Route
+        exact
+        path="/lstInstituicoes"
+        element={
+          <ProtectedRoute>
+            <LstInstituicoes />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        exact
+        path="/lstInstituicoes/editarInstituicao/:id"
+        element={
+          <ProtectedRoute>
+            <Instituicao />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        exact
+        path="/lstInstituicoes/novaInstituicao"
+        element={
+          <ProtectedRoute>
+            <Instituicao />
+          </ProtectedRoute>
+        }
+      />
+
       {/* ROTAS INSTITUICAO */}
       <Route
         exact

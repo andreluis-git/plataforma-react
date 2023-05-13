@@ -2,10 +2,10 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
-import "./InstNavBar.css";
+import "./AdmNavBar.css";
 import { useAuth } from "../../components/hooks/useAuth";
 
-const InstNavBar = (props) => {
+const AdmNavBar = (props) => {
   const { onLogout } = useAuth();
 
   return (
@@ -14,14 +14,9 @@ const InstNavBar = (props) => {
         <div className="container d-flex justify-content-between">
           <div className="d-flex align-items-center itens-esquerda">
             <img src={logo} alt="logo" className="logo-bg" />
-            <Link to="/instCursos" style={{ textDecoration: "none" }}>
+            <Link to="/lstInstituicoes" style={{ textDecoration: "none" }}>
               <button type="button" className="btn btn-site fw-bold mr-1">
-                Cursos
-              </button>
-            </Link>
-            <Link to="/instAlunos" style={{ textDecoration: "none" }}>
-              <button type="button" className="btn btn-site fw-bold mr-1">
-                Alunos
+                Instituições
               </button>
             </Link>
           </div>
@@ -36,12 +31,9 @@ const InstNavBar = (props) => {
                 />
               </div>
               <div className={"custom-dropdown-content"}>
-                <Link
-                  to="/perfilInstituicao"
-                  style={{ textDecoration: "none" }}
-                >
+                {/* <Link to="/perfilAdmin" style={{ textDecoration: "none" }}>
                   Perfil
-                </Link>
+                </Link> */}
                 <Link onClick={onLogout}>Sair</Link>
               </div>
             </div>
@@ -52,4 +44,4 @@ const InstNavBar = (props) => {
   );
 };
 
-export default InstNavBar;
+export default AdmNavBar;

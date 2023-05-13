@@ -41,6 +41,8 @@ export const AuthProvider = ({ children }) => {
           setToken(response.data);
           if (token.isInstituicao) {
             navigate("/instCursos");
+          } else if (token.isAdmin) {
+            navigate("/lstInstituicoes");
           } else {
             navigate("/temas");
           }

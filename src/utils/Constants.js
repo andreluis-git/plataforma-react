@@ -44,4 +44,9 @@ export const EDITAR_CURSO = "/curso/editarCurso";
 export const DELETAR_CURSO = "/curso/deletarCurso";
 
 export const BUSCAR_INSTITUICAO = "/instituicao/buscarInstituicao";
+export const BUSCAR_INSTITUICAO_POR_ID = "/instituicao/buscarInstituicaoPorId";
+export const BUSCAR_INSTITUICAO_POR_NOME =
+  "/instituicao/buscarInstituicaoPorNome";
+export const LISTAR_INSTITUICOES = "/instituicao/listarInstituicoes";
 export const EDITAR_INSTITUICAO = "/instituicao/editarInstituicao";
+export const CADASTRAR_INSTITUICAO = "/instituicao/cadastrarInstituicao";
