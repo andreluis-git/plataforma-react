@@ -32,6 +32,8 @@ export const BUSCAR_ALUNOS_POR_INSTITUICAO_ID_AND_EMAIL =
 export const EDITAR_ALUNO = "/aluno/editarAluno";
 export const EDITAR_ALUNO_INSTITUICAO = "/aluno/editarAlunoInstituicao";
 export const CADASTRAR_ALUNO = "/aluno/cadastrarAluno";
+export const DELETAR_ALUNO = "/aluno/deletarAluno";
+export const ALTERAR_STATUS_ALUNO = "/aluno/alterarStatusAluno";
 
 export const LISTAR_CURSOS_POR_INSTITUICAO =
   "/curso/listarCursosPorInstituicao";

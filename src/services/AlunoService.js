@@ -1,9 +1,11 @@
 import {
+  ALTERAR_STATUS_ALUNO,
   BUSCAR_ALUNO,
   BUSCAR_ALUNOS_POR_INSTITUICAO_ID,
   BUSCAR_ALUNOS_POR_INSTITUICAO_ID_AND_EMAIL,
   BUSCAR_ALUNO_POR_ID,
   CADASTRAR_ALUNO,
+  DELETAR_ALUNO,
   EDITAR_ALUNO,
   EDITAR_ALUNO_INSTITUICAO,
 } from "../utils/Constants";
@@ -137,6 +139,41 @@ const cadastrarAluno = (aluno) =>
       });
   });
 
+const alterarStatusAluno = (alunoId) =>
+  new Promise((resolve, reject) => {
+    api
+      .put(
+        ALTERAR_STATUS_ALUNO,
+        {},
+        {
+          params: { alunoId },
+          headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+        }
+      )
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log("Erro editarAluno :: ", error);
+        reject(error);
+      });
+  });
+
+const deletarAluno = (alunoId) =>
+  new Promise((resolve, reject) => {
+    api
+      .delete(`${DELETAR_ALUNO}/${alunoId}`, {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log("Erro deletarAluno :: ", error);
+        reject(error);
+      });
+  });
+
 const AlunoService = {
   buscarAluno,
   buscarAlunoPorId,
@@ -145,6 +182,8 @@ const AlunoService = {
   editarAluno,
   editarAlunoInstituicao,
   cadastrarAluno,
+  alterarStatusAluno,
+  deletarAluno,
 };
 
 export default AlunoService;

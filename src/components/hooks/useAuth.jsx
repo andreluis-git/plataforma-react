@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import Api from "../../services/Api";
+import { toast } from "react-toastify";
 
 const AuthContext = React.createContext(null);
 
@@ -46,6 +47,13 @@ export const AuthProvider = ({ children }) => {
         })
         .catch((error) => {
           console.log("erro Login :: ", error);
+          toast.error("Erro ao fazer login, procure um administrador", {
+            autoClose: 2000,
+            closeOnClick: true,
+            pauseOnFocusLoss: false,
+            pauseOnHover: false,
+            position: toast.POSITION.TOP_RIGHT,
+          });
         });
     },
     [navigate]

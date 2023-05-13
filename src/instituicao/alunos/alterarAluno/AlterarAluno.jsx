@@ -109,6 +109,29 @@ const AlterarAluno = (props) => {
     }
   };
 
+  const alterarStatusAluno = (alunoId) => {
+    AlunoService.alterarStatusAluno(alunoId)
+      .then((response) => {
+        toast.success("Sucesso ao alterar status do aluno!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setAluno({ ...aluno, ativo: !aluno.ativo });
+      })
+      .catch((error) => {
+        toast.error("Erro ao alterar status do aluno!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      });
+  };
+
   return (
     <>
       <InstNavBar />
@@ -116,6 +139,18 @@ const AlterarAluno = (props) => {
         <PageHeader pagina={aluno ? "Editar aluno" : "Cadastrar aluno"} />
       </div>
       <div className="page-body container mt-3">
+        {window.location.pathname.includes("alterarAluno") && aluno && (
+          <div className="d-flex justify-content-end">
+            <button
+              className="btn btn-site mt-2"
+              onClick={() => {
+                alterarStatusAluno(aluno.id);
+              }}
+            >
+              {aluno.ativo ? "Desativar aluno" : "Ativar aluno"}
+            </button>
+          </div>
+        )}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group mb-2">
             <label>Nome aluno</label>

@@ -5,6 +5,7 @@ import InstPageHeader from "../pageHeader/InstPageHeader";
 
 import { useNavigate } from "react-router-dom";
 import "./InstAlunos.css";
+import { toast } from "react-toastify";
 
 const InstAlunos = () => {
   const [alunos, setAlunos] = useState();
@@ -24,13 +25,65 @@ const InstAlunos = () => {
   };
 
   const buscarAlunosPorInstituicaoIdAndEmail = (texto) => {
-    AlunoService.buscarAlunosPorInstituicaoIdAndEmail(texto)
+    if (texto) {
+      AlunoService.buscarAlunosPorInstituicaoIdAndEmail(texto)
+        .then((response) => {
+          setAlunos(response);
+        })
+        .catch((error) =>
+          console.log("Erro ao buscarAlunosPorInstituicaoIdAndEmail")
+        );
+    } else {
+      buscarAlunosPorInstituicaoId();
+    }
+  };
+
+  const alterarStatusAluno = (alunoId) => {
+    AlunoService.alterarStatusAluno(alunoId)
       .then((response) => {
-        setAlunos(response);
+        toast.success("Sucesso ao alterar status do aluno!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        buscarAlunosPorInstituicaoId();
       })
-      .catch((error) =>
-        console.log("Erro ao buscarAlunosPorInstituicaoIdAndEmail")
-      );
+      .catch((error) => {
+        toast.error("Erro ao alterar status do aluno!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      });
+  };
+
+  const deletarAluno = (alunoId) => {
+    AlunoService.deletarAluno(alunoId)
+      .then((response) => {
+        toast.success("Sucesso ao deletar aluno!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        buscarAlunosPorInstituicaoIdAndEmail(
+          document.getElementById("buscarTitulo").value
+        );
+      })
+      .catch((error) => {
+        toast.error("Erro ao deletar aluno!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      });
   };
 
   return (
@@ -66,6 +119,14 @@ const InstAlunos = () => {
                   <button
                     className="btn btn-site m-2 mt-0 mb-0"
                     onClick={() => {
+                      alterarStatusAluno(aluno.id);
+                    }}
+                  >
+                    {aluno.ativo ? "Desativar" : "Ativar"}
+                  </button>
+                  <button
+                    className="btn btn-site m-2 mt-0 mb-0"
+                    onClick={() => {
                       navigate(
                         `${window.location.pathname}/alterarAluno/${aluno.id}`
                       );
@@ -73,7 +134,14 @@ const InstAlunos = () => {
                   >
                     Editar
                   </button>
-                  <button className="btn btn-danger">Deletar</button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => {
+                      deletarAluno(aluno.id);
+                    }}
+                  >
+                    Deletar
+                  </button>
                 </div>
               </li>
             ))}
