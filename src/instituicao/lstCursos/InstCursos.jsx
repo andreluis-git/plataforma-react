@@ -28,7 +28,9 @@ const InstCursos = () => {
       .then((response) => {
         setCursos(response);
       })
-      .catch((error) => console.log("Erro ao listar curso InstCursos.jsx"));
+      .catch((error) =>
+        console.log("Erro ao listar curso InstCursos.jsx", error)
+      );
   };
 
   const listarCursosPorInstituicaoAndNome = (nome) => {
@@ -37,7 +39,10 @@ const InstCursos = () => {
         setCursos(response);
       })
       .catch((error) =>
-        console.log("Erro ao  listarCursosPorInstituicaoAndNome InstCursos.jsx")
+        console.log(
+          "Erro ao  listarCursosPorInstituicaoAndNome InstCursos.jsx",
+          error
+        )
       );
   };
 
@@ -46,7 +51,6 @@ const InstCursos = () => {
   const navigate = useNavigate();
 
   const deletarCurso = () => {
-    console.log("Deletar o curso", cursoDeletar.id);
     CursoService.deletarCurso(cursoDeletar.id)
       .then((response) => {
         dispatch(rxSetShowModalConfirmacao(false));
@@ -67,7 +71,7 @@ const InstCursos = () => {
           pauseOnHover: false,
           position: toast.POSITION.TOP_RIGHT,
         });
-        console.log("Erro ao deletar curso");
+        console.log("Erro ao deletar curso", error);
       });
     setCursoDeletar(null);
   };

@@ -56,7 +56,6 @@ const PerfilAluno = (props) => {
   }, [setValue]);
 
   const onSubmit = (event) => {
-    // console.log(JSON.stringify(event));
     let alunoEditado = { ...aluno };
     Object.keys(event).map((key) => (alunoEditado[key] = event[key]));
     AlunoService.editarAluno(alunoEditado)
@@ -77,7 +76,7 @@ const PerfilAluno = (props) => {
           pauseOnHover: false,
           position: toast.POSITION.TOP_RIGHT,
         });
-        console.log("PerfilAluno erro");
+        console.log("PerfilAluno erro", error);
       });
   };
 

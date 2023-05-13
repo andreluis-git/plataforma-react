@@ -40,7 +40,6 @@ const listarCursosPorInstituicaoAndNome = (nome) =>
 
 const cadastrarCurso = (curso) =>
   new Promise((resolve, reject) => {
-    console.log(curso);
     api
       .post(
         CADASTRAR_CURSO,
@@ -62,7 +61,6 @@ const cadastrarCurso = (curso) =>
 
 const editarCurso = (curso) =>
   new Promise((resolve, reject) => {
-    console.log(curso);
     api
       .put(
         EDITAR_CURSO,

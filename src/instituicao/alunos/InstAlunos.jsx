@@ -21,7 +21,7 @@ const InstAlunos = () => {
       .then((response) => {
         setAlunos(response);
       })
-      .catch((error) => console.log("Erro ao buscarAlunos"));
+      .catch((error) => console.log("Erro ao buscarAlunos", error));
   };
 
   const buscarAlunosPorInstituicaoIdAndEmail = (texto) => {
@@ -31,7 +31,7 @@ const InstAlunos = () => {
           setAlunos(response);
         })
         .catch((error) =>
-          console.log("Erro ao buscarAlunosPorInstituicaoIdAndEmail")
+          console.log("Erro ao buscarAlunosPorInstituicaoIdAndEmail", error)
         );
     } else {
       buscarAlunosPorInstituicaoId();

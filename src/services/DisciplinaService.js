@@ -56,7 +56,6 @@ const listarDisciplinasCursoPorNome = (id, nome) =>
 
 const editarDisciplina = (disciplina) =>
   new Promise((resolve, reject) => {
-    console.log("SERVICE", disciplina);
     api
       .put(
         EDITAR_DISCIPLINA,
@@ -78,7 +77,6 @@ const editarDisciplina = (disciplina) =>
 
 const cadastrarDisciplina = (disciplina) =>
   new Promise((resolve, reject) => {
-    console.log("SERVICE", disciplina);
     api
       .post(
         CADASTRAR_DISCIPLINA,

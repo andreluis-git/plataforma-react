@@ -16,7 +16,6 @@ const CollapsibleCardCandidatos = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const enviarEmail = () => {
-    console.log("ENVIO EMAIL");
     const emailBody = `Olá ${candidato.nome}, tudo bem? \nEste e-mail é referente a sua participação no desenvolvimento do trabalho "${tema.titulo}", gostaria de saber se ainda possui interesse?\n\nAtenciosamente.`;
 
     const sendEmail = `mailto:${candidato.email}?subject=${
@@ -27,11 +26,6 @@ const CollapsibleCardCandidatos = (props) => {
   };
 
   const enviarWhatsapp = () => {
-    console.log(
-      "ENVIO Whats ",
-      `https://wa.me/55${candidato.whatsapp.replace(/[^\w]/g, "")}`
-    );
-
     window.open(`https://wa.me/55${candidato.whatsapp.replace(/[^\w]/g, "")}`);
   };
 

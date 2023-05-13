@@ -24,13 +24,11 @@ const CollapsibleCardTema = (props) => {
   useEffect(() => {
     setIsOpen(false);
     setUsuario(JWTUtil.parseJwt(localStorage.getItem("token")));
-    // console.log(tema);
   }, [tema]);
 
   const listarCandidatosTema = (temaId) => {
     TemaService.listarCandidatosTema(temaId)
       .then((response) => {
-        console.log(response);
         setCandidatosTema(response);
       })
       .catch((error) =>
@@ -49,7 +47,6 @@ const CollapsibleCardTema = (props) => {
           position: toast.POSITION.TOP_RIGHT,
         });
         buscarTemasLista();
-        console.log("ModalTema.js candidatarTema sucesso ", response);
       })
       .catch((error) => {
         toast.error("Erro ao realizar candidatura!", {
@@ -97,7 +94,6 @@ const CollapsibleCardTema = (props) => {
 
   const chanceStatusTema = (tema) => {
     let temaEditado = { ...tema, ativo: !tema.ativo };
-    // console.log(temaEditado);
     TemaService.editarTema(temaEditado)
       .then((response) => {
         buscarTemasLista();
@@ -170,7 +166,6 @@ const CollapsibleCardTema = (props) => {
                   <button
                     className="btn btn-site"
                     onClick={() => {
-                      console.log("DESATIVAR");
                       chanceStatusTema(tema);
                     }}
                   >

@@ -43,7 +43,10 @@ const InstDisciplinaModal = (props) => {
             pauseOnHover: false,
             position: toast.POSITION.TOP_RIGHT,
           });
-          console.log("Erro ao cadastrar disciplina InstDisciplinaModal.jsx");
+          console.log(
+            "Erro ao cadastrar disciplina InstDisciplinaModal.jsx",
+            error
+          );
         });
     } else {
       let disciplinaEditada = { ...editarDisciplina };
@@ -68,7 +71,10 @@ const InstDisciplinaModal = (props) => {
             pauseOnHover: false,
             position: toast.POSITION.TOP_RIGHT,
           });
-          console.log("Erro ao editar disciplina InstDisciplinaModal.jsx");
+          console.log(
+            "Erro ao editar disciplina InstDisciplinaModal.jsx",
+            error
+          );
         });
     }
   };

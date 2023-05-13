@@ -24,7 +24,6 @@ const Header = (props) => {
   const buscarTemasLista = useCallback(
     (pagina) => {
       TemaService.buscarTemaPorPagina(pagina).then((response) => {
-        console.log(response);
         dispatch(rxSetListaTemas(response));
       });
     },

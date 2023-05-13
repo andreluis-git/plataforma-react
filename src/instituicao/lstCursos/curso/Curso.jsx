@@ -53,7 +53,9 @@ const Curso = () => {
       .then((response) => {
         setDisciplinas(response);
       })
-      .catch((ex) => console.log("Erro ao buscar disciplinas Curso.jsx"));
+      .catch((error) =>
+        console.log("Erro ao buscar disciplinas Curso.jsx", error)
+      );
   };
 
   const buscarDisciplinaPorNome = (event) => {
@@ -63,16 +65,13 @@ const Curso = () => {
       .then((response) => {
         setDisciplinas(response);
       })
-      .catch((ex) => console.log("ERRO AO BUSCAR DISCIPLINA POR NOME"));
-    console.log(
-      "buscarDisciplinaPorNome",
-      document.getElementById("buscarNome").value
-    );
+      .catch((error) =>
+        console.log("ERRO AO BUSCAR DISCIPLINA POR NOME", error)
+      );
   };
 
   const editarCurso = (event) => {
     if (!curso) {
-      console.log(event);
       CursoService.cadastrarCurso(event)
         .then((response) => {
           dispatch(rxSetCursoEdicao(response));
@@ -96,7 +95,7 @@ const Curso = () => {
             pauseOnHover: false,
             position: toast.POSITION.TOP_RIGHT,
           });
-          console.log("Erro ao cadastrar curso curso.jsx");
+          console.log("Erro ao cadastrar curso curso.jsx", error);
         });
     } else {
       let cursoEditado = { ...curso };
@@ -121,13 +120,12 @@ const Curso = () => {
             pauseOnHover: false,
             position: toast.POSITION.TOP_RIGHT,
           });
-          console.log("Erro ao editar curso curso.jsx");
+          console.log("Erro ao editar curso curso.jsx", error);
         });
     }
   };
 
   const deletarDisciplina = () => {
-    console.log(disciplinaDeletar);
     DisciplinaService.deletarDisciplina(disciplinaDeletar.id)
       .then((response) => {
         buscarDisciplinas(idTemaEdicao);
@@ -147,7 +145,7 @@ const Curso = () => {
           pauseOnHover: false,
           position: toast.POSITION.TOP_RIGHT,
         });
-        console.log("ERRO AO DELETAR DISCIPLINA CURSO.JSX");
+        console.log("ERRO AO DELETAR DISCIPLINA CURSO.JSX", error);
       });
   };
 

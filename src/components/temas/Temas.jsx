@@ -57,7 +57,6 @@ function Temas(props) {
   const deletarTema = () => {
     TemaService.deletarTema(temaExclusao.id)
       .then(() => {
-        console.log("Tema deletado:: ", temaExclusao);
         TemaService.buscarTemaPorPagina(
           window.location.pathname.replace("/", "")
         ).then((response) => {
@@ -79,7 +78,6 @@ function Temas(props) {
           pauseOnHover: false,
           position: toast.POSITION.TOP_RIGHT,
         });
-        console.log("Erro ao deletar tema:: ", temaExclusao);
       });
   };
 

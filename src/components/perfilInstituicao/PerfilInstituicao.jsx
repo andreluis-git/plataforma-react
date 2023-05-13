@@ -19,16 +19,13 @@ const PerfilInstituicao = (props) => {
         setValue("id", response.id);
         setValue("nome", response.nome);
         setValue("email", response.email);
-        console.log(response);
       })
       .catch((error) => console.log("Perfil.js buscarAluno ", error));
   }, [setValue]);
 
   const onSubmit = (event) => {
-    console.log("Perfil instituicao", event);
     InstituicaoService.editarInstituicao(event)
       .then((response) => {
-        console.log("Instituição editada com sucesso");
         toast.success("Perfil editado com sucesso!", {
           autoClose: 2000,
           closeOnClick: true,
@@ -45,7 +42,7 @@ const PerfilInstituicao = (props) => {
           pauseOnHover: false,
           position: toast.POSITION.TOP_RIGHT,
         });
-        console.log("Erro ao editar instituição PerfilInstituicao.jsx");
+        console.log("Erro ao editar instituição PerfilInstituicao.jsx", error);
       });
   };
 

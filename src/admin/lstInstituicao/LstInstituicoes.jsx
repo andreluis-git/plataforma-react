@@ -13,7 +13,6 @@ const LstInstituicoes = () => {
   const listarInstituicoes = () => {
     InstituicaoService.listarInstituicoes()
       .then((response) => {
-        console.log("SUCESSO AO BUSCAR INSTITUICOES", response);
         setInstituicoes(response);
       })
       .catch((error) => {
@@ -34,7 +33,10 @@ const LstInstituicoes = () => {
           setInstituicoes(response);
         })
         .catch((error) =>
-          console.log("Erro ao  buscarInstituicaoPorNome LstInstituicoes.jsx")
+          console.log(
+            "Erro ao  buscarInstituicaoPorNome LstInstituicoes.jsx",
+            error
+          )
         );
     } else {
       listarInstituicoes();

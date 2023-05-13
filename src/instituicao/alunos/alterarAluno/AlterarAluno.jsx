@@ -31,7 +31,9 @@ const AlterarAluno = (props) => {
         });
         setCursosOptions(cursos);
       })
-      .catch((error) => console.log("Erro ao listar curso InstCursos.jsx"));
+      .catch((error) =>
+        console.log("Erro ao listar curso InstCursos.jsx", error)
+      );
   }, [aluno, setValue]);
 
   useEffect(() => {
@@ -49,7 +51,7 @@ const AlterarAluno = (props) => {
           setValue("nome", response.nome);
           setValue("email", response.email);
         })
-        .catch((error) => console.log("Erro ao buscar aluno por id"));
+        .catch((error) => console.log("Erro ao buscar aluno por id", error));
     } else {
       buscarCursosInstituicao();
     }
@@ -84,7 +86,6 @@ const AlterarAluno = (props) => {
           });
         });
     } else {
-      console.log("CADASTRO", event);
       event.cursoAluno = { id: event.cursoAluno.value };
       AlunoService.cadastrarAluno(event)
         .then((response) => {

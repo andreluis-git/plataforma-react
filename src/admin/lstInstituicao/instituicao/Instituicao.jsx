@@ -25,7 +25,7 @@ const Instituicao = () => {
           setValue("nome", response.nome);
           setValue("email", response.email);
         })
-        .catch((error) => console.log("Erro ao buscar aluno por id"));
+        .catch((error) => console.log("Erro ao buscar aluno por id", error));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
