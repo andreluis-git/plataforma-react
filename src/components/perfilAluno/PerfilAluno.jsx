@@ -170,6 +170,32 @@ const PerfilAluno = (props) => {
                 />
               )}
             />
+            <h5
+              className="mb-2 mt-2"
+              style={{ color: "var(--st-fontePageHeader)" }}
+            >
+              Alterar senha
+            </h5>
+            <div className="form-group mb-2 d-flex justify-content-between">
+              <div style={{ width: "48%" }}>
+                <label>Senha atual</label>
+                <input
+                  className="form-control"
+                  {...register("senhaAtual")}
+                  placeholder="Digite sua senha atual"
+                  type="password"
+                />
+              </div>
+              <div style={{ width: "48%" }}>
+                <label>Nova senha</label>
+                <input
+                  className="form-control"
+                  {...register("senhaNova")}
+                  placeholder="Digite sua nova senha"
+                  type="password"
+                />
+              </div>
+            </div>
             <div className="d-flex justify-content-end">
               <button
                 type="submit"
