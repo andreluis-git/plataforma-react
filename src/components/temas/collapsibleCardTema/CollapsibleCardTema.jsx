@@ -9,11 +9,13 @@ import Truncate from "../../../utils/TruncateString";
 import ModalCandidatos from "../modais/ModalCandidatos";
 import { rxSetListaTemas } from "../../../redux/slices/listaTemasSlice";
 import { toast } from "react-toastify";
+import JWTUtil from "../../../utils/JWTUtil";
 
 const CollapsibleCardTema = (props) => {
   const { tema, hasCandidatos, setTemaExclusao } = props;
   const contentRef = useRef();
   const dispatch = useDispatch();
+  const [usuario, setUsuario] = useState();
 
   const [isOpen, setIsOpen] = useState(false);
   const [showModalCandidatos, setShowModalCandidatos] = useState(false);
@@ -21,6 +23,7 @@ const CollapsibleCardTema = (props) => {
 
   useEffect(() => {
     setIsOpen(false);
+    setUsuario(JWTUtil.parseJwt(localStorage.getItem("token")));
     // console.log(tema);
   }, [tema]);
 
@@ -38,19 +41,50 @@ const CollapsibleCardTema = (props) => {
   const candidatarTema = (temaId) => {
     TemaService.candidatarTema(temaId)
       .then((response) => {
+        toast.success("Candidatura realizada com sucesso!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        buscarTemasLista();
         console.log("ModalTema.js candidatarTema sucesso ", response);
       })
-      .catch((error) => console.log("ModalTema.js candidatarTema ", error));
+      .catch((error) => {
+        toast.error("Erro ao realizar candidatura!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        console.log("ModalTema.js candidatarTema ", error);
+      });
   };
 
   const removerCandidaturaTema = (temaId) => {
     TemaService.removerCandidaturaTema(temaId)
       .then((response) => {
+        toast.success("Candidatura cancelada com sucesso!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
         buscarTemasLista();
       })
-      .catch((error) =>
-        console.log("ModalTema.js removerCandidaturaTema ", error)
-      );
+      .catch((error) => {
+        toast.error("Erro ao cancelar candidatura!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        console.log("ModalTema.js removerCandidaturaTema ", error);
+      });
   };
 
   const buscarTemasLista = () => {
@@ -148,14 +182,27 @@ const CollapsibleCardTema = (props) => {
             <div className="d-flex align-items-center">
               {window.location.pathname === "/temas" && (
                 <>
-                  <button
-                    className="btn btn-site"
-                    onClick={() => {
-                      candidatarTema(tema.id);
-                    }}
-                  >
-                    Candidatar-se
-                  </button>
+                  {usuario &&
+                  !tema.candidatosTema.some((c) => c.id === usuario?.userId) ? (
+                    <button
+                      className="btn btn-site"
+                      onClick={() => {
+                        candidatarTema(tema.id);
+                      }}
+                    >
+                      Candidatar-se
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-site"
+                      onClick={() => {
+                        removerCandidaturaTema(tema.id);
+                      }}
+                    >
+                      Cancelar candidatura
+                    </button>
+                  )}
+
                   <div
                     className="card-icons btn-icon-light ml-2"
                     onClick={() => PrintTema.print(tema)}

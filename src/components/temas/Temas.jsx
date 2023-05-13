@@ -93,18 +93,20 @@ function Temas(props) {
         />
       </div>
       <div className="tema-body container pt-3">
-        <div className="d-flex justify-content-end">
-          <button
-            type="button"
-            className="btn btn-site mb-3"
-            onClick={() => {
-              dispatch(rxSetTemaEdicao(null));
-              dispatch(rxSetShowNovoTemaModal(true));
-            }}
-          >
-            Novo tema
-          </button>
-        </div>
+        {props.pagina === "Anunciados" && (
+          <div className="d-flex justify-content-end">
+            <button
+              type="button"
+              className="btn btn-site mb-3"
+              onClick={() => {
+                dispatch(rxSetTemaEdicao(null));
+                dispatch(rxSetShowNovoTemaModal(true));
+              }}
+            >
+              Novo tema
+            </button>
+          </div>
+        )}
         {temas &&
           temas.map((tema, idx) => (
             <CollapsibleCardTema
