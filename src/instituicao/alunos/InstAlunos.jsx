@@ -48,7 +48,12 @@ const InstAlunos = () => {
           pauseOnHover: false,
           position: toast.POSITION.TOP_RIGHT,
         });
-        buscarAlunosPorInstituicaoId();
+        let texto = document.getElementById("buscarTitulo").value;
+        if (texto) {
+          buscarAlunosPorInstituicaoIdAndEmail(texto);
+        } else {
+          buscarAlunosPorInstituicaoId();
+        }
       })
       .catch((error) => {
         toast.error("Erro ao alterar status do aluno!", {
