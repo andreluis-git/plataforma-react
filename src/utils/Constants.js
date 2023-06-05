@@ -49,4 +49,5 @@ export const BUSCAR_INSTITUICAO_POR_NOME =
   "/instituicao/buscarInstituicaoPorNome";
 export const LISTAR_INSTITUICOES = "/instituicao/listarInstituicoes";
 export const EDITAR_INSTITUICAO = "/instituicao/editarInstituicao";
+export const DELETAR_INSTITUICAO = "/instituicao/deletarInstituicao";
 export const CADASTRAR_INSTITUICAO = "/instituicao/cadastrarInstituicao";

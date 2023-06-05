@@ -3,6 +3,7 @@ import {
   BUSCAR_INSTITUICAO_POR_ID,
   BUSCAR_INSTITUICAO_POR_NOME,
   CADASTRAR_INSTITUICAO,
+  DELETAR_INSTITUICAO,
   EDITAR_INSTITUICAO,
   LISTAR_INSTITUICOES,
 } from "../utils/Constants";
@@ -111,12 +112,28 @@ const listarInstituicaoPorNome = (nome) =>
       });
   });
 
+const deletarInstituicao = (instituicaoId) =>
+  new Promise((resolve, reject) => {
+    api
+      .delete(`${DELETAR_INSTITUICAO}/${instituicaoId}`, {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.log("Erro deletarInstituicao :: ", error);
+        reject(error);
+      });
+  });
+
 const InstituicaoService = {
   burcarInstituicao,
   burcarInstituicaoPorId,
   listarInstituicaoPorNome,
   listarInstituicoes,
   editarInstituicao,
+  deletarInstituicao,
   cadastrarInstituicao,
 };
 

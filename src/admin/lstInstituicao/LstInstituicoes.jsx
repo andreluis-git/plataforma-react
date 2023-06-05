@@ -43,6 +43,29 @@ const LstInstituicoes = () => {
     }
   };
 
+  const deletarInstituicao = (instituicaoId) => {
+    InstituicaoService.deletarInstituicao(instituicaoId)
+      .then((response) => {
+        toast.success("Instituicao deletada com sucesso!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        listarInstituicoes();
+      })
+      .catch((error) => {
+        toast.error("Erro ao deletar instituição!", {
+          autoClose: 2000,
+          closeOnClick: true,
+          pauseOnFocusLoss: false,
+          pauseOnHover: false,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      });
+  };
+
   useEffect(() => {
     listarInstituicoes();
   }, []);
@@ -88,7 +111,12 @@ const LstInstituicoes = () => {
                   >
                     Editar
                   </button>
-                  <button className="btn btn-danger" onClick={() => {}}>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => {
+                      deletarInstituicao(instituicao.id);
+                    }}
+                  >
                     Deletar
                   </button>
                 </div>
